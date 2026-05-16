@@ -1,8 +1,120 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import Tilt from 'react-parallax-tilt';
 
 export default function Portfolio() {
+  const [init, setInit] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  // Custom Cursor State
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseOver = (e) => {
+      if (['A', 'BUTTON', 'INPUT'].includes(e.target.tagName) || e.target.closest('a') || e.target.closest('button')) {
+        setIsHovering(true);
+      } else {
+        setIsHovering(false);
+      }
+    };
+    window.addEventListener('mouseover', handleMouseOver);
+    return () => window.removeEventListener('mouseover', handleMouseOver);
+  }, []);
+
+  // Particles Init
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
+
+  // Terminal State
+  const [terminalInput, setTerminalInput] = useState('');
+  const [terminalOutput, setTerminalOutput] = useState([
+    { type: 'sys', text: 'import brain' },
+    { type: 'sys', text: 'from future import ai_agent' },
+    { type: 'sys', text: 'initialize_engineer()' },
+    { type: 'out', text: 'Skills: ["TensorFlow", "PyTorch", "CV"]' },
+    { type: 'out', text: 'Focus: "Agentic AI Systems"' },
+    { type: 'sys', text: 'System Ready. Type "help" for commands.' }
+  ]);
+  
+  const handleTerminalSubmit = (e) => {
+    if (e.key === 'Enter' && terminalInput.trim()) {
+      const cmd = terminalInput.trim().toLowerCase();
+      const newOutput = [...terminalOutput, { type: 'in', text: `> ${cmd}` }];
+      
+      if (cmd === 'help') {
+        newOutput.push({ type: 'out', text: 'Available commands: skills, contact, clear, whoami' });
+      } else if (cmd === 'skills') {
+        newOutput.push({ type: 'out', text: 'Loading neural weights... [C++, Python, TensorFlow, PyTorch, YOLOv8]' });
+      } else if (cmd === 'contact') {
+        newOutput.push({ type: 'out', text: 'Establishing connection: sriharshasripada25@gmail.com' });
+      } else if (cmd === 'clear') {
+        setTerminalOutput([]);
+        setTerminalInput('');
+        return;
+      } else if (cmd === 'whoami') {
+        newOutput.push({ type: 'out', text: 'Guest User (Clearance Level: Visitor)' });
+      } else {
+        newOutput.push({ type: 'err', text: `Command not found: ${cmd}` });
+      }
+      
+      setTerminalOutput(newOutput);
+      setTerminalInput('');
+    }
+  };
+
+  // Chatbot State
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatInput, setChatInput] = useState('');
+  const [chatMessages, setChatMessages] = useState([
+    { role: 'ai', text: "Hello! I'm Sriharsha's virtual AI assistant. Ask me anything about his experience, projects, or skills!" }
+  ]);
+
+  const handleChatSubmit = (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+
+    const userMsg = chatInput.trim();
+    const newMsgs = [...chatMessages, { role: 'user', text: userMsg }];
+    setChatMessages(newMsgs);
+    setChatInput('');
+
+    // Simulated AI response
+    setTimeout(() => {
+      const lowerMsg = userMsg.toLowerCase();
+      let aiResponse = "That's an interesting question! You can email Harsha directly at sriharshasripada25@gmail.com for more details.";
+      
+      if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built')) {
+        aiResponse = "Harsha has built incredible systems like OmniLens-Pro (an AI shopping assistant), an automated Email-Helper-Bot, and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
+      } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack')) {
+        aiResponse = "His core stack includes Python, C++, TensorFlow, PyTorch, and React. He specializes in Machine Learning pipelines and Agentic AI Systems.";
+      } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email')) {
+        aiResponse = "You can reach out to him directly at sriharshasripada25@gmail.com or connect with him on LinkedIn!";
+      } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa')) {
+        aiResponse = "He is currently a B.Tech student at NIT Warangal with a 9.26 CGPA. He also secured AIR 3504 in JEE Mains!";
+      }
+
+      setChatMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
+    }, 800);
+  };
+
   const projects = [
     {
       title: 'OmniLens-Pro',
@@ -65,12 +177,72 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-cyan-500/30 overflow-x-hidden font-sans">
-      {/* Animated Neon Background */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-600/20 blur-[120px] mix-blend-screen animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] mix-blend-screen animate-pulse" style={{ animationDelay: '2s' }}></div>
-      </div>
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-cyan-500/30 overflow-x-hidden font-sans cursor-none">
+      
+      {/* Scroll Progress Bar */}
+      <motion.div 
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 origin-left z-[100]"
+        style={{ scaleX }}
+      />
+
+      {/* Custom Cursor */}
+      <motion.div 
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyan-400 pointer-events-none z-[9999] mix-blend-screen transition-transform duration-100 ease-out"
+        animate={{ 
+          x: mousePosition.x - 16, 
+          y: mousePosition.y - 16,
+          scale: isHovering ? 1.5 : 1,
+          backgroundColor: isHovering ? 'rgba(34, 211, 238, 0.1)' : 'transparent'
+        }}
+      />
+      <motion.div 
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-cyan-300 pointer-events-none z-[9999]"
+        animate={{ x: mousePosition.x - 4, y: mousePosition.y - 4 }}
+        transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
+      />
+
+      {/* Interactive Background Particles */}
+      {init && (
+        <Particles
+          id="tsparticles"
+          className="absolute inset-0 z-0 pointer-events-none"
+          options={{
+            background: { color: { value: "transparent" } },
+            fpsLimit: 60,
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: "grab" },
+              },
+              modes: {
+                grab: { distance: 140, links: { opacity: 0.5 } },
+              },
+            },
+            particles: {
+              color: { value: "#22d3ee" },
+              links: {
+                color: "#a855f7",
+                distance: 150,
+                enable: true,
+                opacity: 0.2,
+                width: 1,
+              },
+              move: {
+                direction: "none",
+                enable: true,
+                outModes: { default: "bounce" },
+                random: false,
+                speed: 0.8,
+                straight: false,
+              },
+              number: { density: { enable: true, area: 800 }, value: 40 },
+              opacity: { value: 0.3 },
+              shape: { type: "circle" },
+              size: { value: { min: 1, max: 2 } },
+            },
+            detectRetina: true,
+          }}
+        />
+      )}
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)]">
@@ -78,17 +250,18 @@ export default function Portfolio() {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => window.scrollTo(0,0)}
           >
             <FaBrain className="text-cyan-400 w-8 h-8" />
             <h1 className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Sriharsha.AI</h1>
           </motion.div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            <a href="#about" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">About</a>
-            <a href="#projects" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Projects</a>
-            <a href="#skills" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Skills</a>
-            <a href="#achievements" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Achievements</a>
-            <a href="mailto:sriharshasripada25@gmail.com" className="px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all">Email Me</a>
+            <a href="#about" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all cursor-none">About</a>
+            <a href="#projects" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all cursor-none">Projects</a>
+            <a href="#skills" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all cursor-none">Skills</a>
+            <a href="#achievements" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all cursor-none">Achievements</a>
+            <a href="mailto:sriharshasripada25@gmail.com" className="px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all cursor-none">Email Me</a>
           </div>
         </div>
       </nav>
@@ -116,11 +289,11 @@ export default function Portfolio() {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
-              <a href="mailto:sriharshasripada25@gmail.com" className="group relative px-8 py-3 bg-cyan-500 text-black font-bold rounded-xl overflow-hidden shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all">
+              <a href="mailto:sriharshasripada25@gmail.com" className="cursor-none group relative px-8 py-3 bg-cyan-500 text-black font-bold rounded-xl overflow-hidden shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all">
                 <span className="relative z-10 flex items-center gap-2"><FaEnvelope className="w-4 h-4" /> Initialize Contact</span>
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
               </a>
-              <a href="https://github.com/SriHarsha25112006" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-8 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all">
+              <a href="https://github.com/SriHarsha25112006" target="_blank" rel="noreferrer" className="cursor-none flex items-center gap-2 px-8 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all">
                 <FaGithub className="w-5 h-5" /> GitHub
               </a>
             </motion.div>
@@ -139,32 +312,50 @@ export default function Portfolio() {
             </motion.div>
           </motion.div>
 
+          {/* Interactive Terminal Hero */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="relative hidden lg:block"
+            className="relative hidden lg:block z-20"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-[3rem] blur-3xl animate-pulse"></div>
-            <div className="relative h-[500px] w-full rounded-[2rem] border border-white/10 bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col p-8 font-mono text-sm md:text-base">
-              <div className="flex gap-2 mb-6 border-b border-white/10 pb-4">
-                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-[2rem] blur-3xl animate-pulse pointer-events-none"></div>
+            <div className="relative h-[450px] w-full rounded-[2rem] border border-cyan-500/30 bg-black/80 backdrop-blur-xl shadow-[0_0_50px_rgba(6,182,212,0.15)] flex flex-col font-mono text-sm overflow-hidden">
+              
+              {/* Terminal Header */}
+              <div className="bg-white/5 border-b border-white/10 px-4 py-3 flex items-center gap-4">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <p className="text-gray-400 text-xs flex items-center gap-2"><FaTerminal /> root@sriharsha-ai: ~</p>
               </div>
-              <div className="text-gray-400 space-y-3">
-                <p><span className="text-purple-400">import</span> <span className="text-white">brain</span></p>
-                <p><span className="text-purple-400">from</span> <span className="text-white">future</span> <span className="text-purple-400">import</span> <span className="text-white">ai_agent</span></p>
-                <br/>
-                <p><span className="text-cyan-400">def</span> <span className="text-blue-400">initialize_engineer</span>():</p>
-                <p className="pl-6"><span className="text-white">skills</span> = [<span className="text-green-400">"TensorFlow"</span>, <span className="text-green-400">"PyTorch"</span>, <span className="text-green-400">"CV"</span>]</p>
-                <p className="pl-6"><span className="text-white">focus</span> = <span className="text-green-400">"Agentic AI Systems"</span></p>
-                <p className="pl-6"><span className="text-purple-400">return</span> <span className="text-white">skills</span>, <span className="text-white">focus</span></p>
-                <br/>
-                <p className="text-gray-500"># Model Training Initiated...</p>
-                <p className="text-cyan-400 animate-pulse">Epoch 1/100: Loss = 0.0421, Acc = 99.63% 🚀</p>
-                <p className="text-cyan-400 animate-pulse" style={{ animationDelay: '0.5s' }}>Deploying to production...</p>
-                <p className="mt-4 text-green-400">✓ System Ready.</p>
+
+              {/* Terminal Body */}
+              <div className="flex-1 p-6 overflow-y-auto space-y-2 text-gray-300">
+                {terminalOutput.map((line, i) => (
+                  <div key={i} className={`flex gap-3 ${line.type === 'err' ? 'text-red-400' : line.type === 'sys' ? 'text-purple-400' : 'text-cyan-300'}`}>
+                    <span className="opacity-50 select-none">~</span>
+                    <span className="whitespace-pre-wrap">{line.text}</span>
+                  </div>
+                ))}
+                
+                {/* Active Input Line */}
+                <div className="flex gap-3 items-center text-green-400 mt-4">
+                  <span className="opacity-50 select-none">~</span>
+                  <span className="text-white">&gt;</span>
+                  <input 
+                    type="text" 
+                    value={terminalInput}
+                    onChange={(e) => setTerminalInput(e.target.value)}
+                    onKeyDown={handleTerminalSubmit}
+                    className="flex-1 bg-transparent border-none outline-none text-white caret-cyan-400 cursor-none"
+                    placeholder="Type a command... (e.g. 'help')"
+                    spellCheck="false"
+                    autoComplete="off"
+                  />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -197,29 +388,31 @@ export default function Portfolio() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <motion.a 
-              href={project.link} target="_blank" rel="noreferrer"
-              key={index} 
-              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
-              className="group relative block rounded-[2rem] border border-white/10 bg-black/40 backdrop-blur-sm p-8 hover:-translate-y-2 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]"
-            >
-              <div className="absolute top-8 right-8 text-white/20 group-hover:text-cyan-400 transition-colors">
-                <FaExternalLinkAlt className="w-5 h-5" />
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-cyan-500/50 transition-all">
-                <FaRocket className="w-6 h-6 text-cyan-400" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-500 transition-all">{project.title}</h3>
-              <p className="text-gray-400 leading-relaxed mb-8">{project.desc}</p>
-              
-              <div className="flex flex-wrap gap-2 mt-auto">
-                {project.tags.map((tag, i) => (
-                  <span key={i} className="px-3 py-1 rounded-md bg-white/5 border border-white/5 text-xs text-gray-300 font-mono tracking-wide group-hover:border-cyan-500/30 group-hover:text-cyan-200 transition-colors">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.a>
+            <motion.div key={index} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="h-full">
+              <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} scale={1.02} transitionSpeed={2500} className="h-full rounded-[2rem]">
+                <a 
+                  href={project.link} target="_blank" rel="noreferrer"
+                  className="cursor-none group relative h-full flex flex-col rounded-[2rem] border border-white/10 bg-black/60 backdrop-blur-xl p-8 hover:border-cyan-500/50 hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)] transition-colors duration-300"
+                >
+                  <div className="absolute top-8 right-8 text-white/20 group-hover:text-cyan-400 transition-colors">
+                    <FaExternalLinkAlt className="w-5 h-5" />
+                  </div>
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-cyan-500/50 transition-all">
+                    <FaRocket className="w-6 h-6 text-cyan-400" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-500 transition-all">{project.title}</h3>
+                  <p className="text-gray-400 leading-relaxed mb-8 flex-1">{project.desc}</p>
+                  
+                  <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className="px-3 py-1 rounded-md bg-white/5 border border-white/5 text-xs text-gray-300 font-mono tracking-wide group-hover:border-cyan-500/30 group-hover:text-cyan-200 transition-colors">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </a>
+              </Tilt>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -236,7 +429,7 @@ export default function Portfolio() {
             <motion.div 
               key={index} 
               initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
-              className="rounded-[2rem] border border-white/10 bg-black/40 backdrop-blur-sm p-8 hover:border-purple-500/40 hover:bg-white/[0.02] transition-all duration-300"
+              className="rounded-[2rem] border border-white/10 bg-black/60 backdrop-blur-xl p-8 hover:border-purple-500/40 hover:bg-white/[0.05] transition-all duration-300"
             >
               <h3 className="text-xl font-bold mb-6 text-gray-200 uppercase tracking-widest">{category.replace('_', ' / ')}</h3>
               <div className="flex flex-wrap gap-3">
@@ -263,7 +456,7 @@ export default function Portfolio() {
             <motion.div 
               key={index} 
               initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
-              className="group rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm p-6 flex items-center gap-6 hover:border-cyan-500/30 hover:bg-white/[0.02] transition-all"
+              className="group rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 flex items-center gap-6 hover:border-cyan-500/30 hover:bg-white/[0.05] transition-all"
             >
               <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
                 <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee]"></div>
@@ -285,15 +478,72 @@ export default function Portfolio() {
             Open to collaborative projects and opportunities in AI, ML, and high-performance systems.
           </motion.p>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="flex justify-center gap-6">
-            <a href="mailto:sriharshasripada25@gmail.com" className="px-10 py-4 rounded-xl bg-cyan-500 text-black font-bold hover:bg-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all flex items-center gap-2">
+            <a href="mailto:sriharshasripada25@gmail.com" className="px-10 py-4 rounded-xl bg-cyan-500 text-black font-bold hover:bg-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all flex items-center gap-2 cursor-none">
               <FaEnvelope className="w-5 h-5" /> Connect
             </a>
-            <a href="https://linkedin.com/in/sri-harsha-sripada-489577341" target="_blank" rel="noreferrer" className="px-10 py-4 rounded-xl border border-white/20 hover:border-cyan-500/50 hover:bg-white/5 transition-all flex items-center gap-2">
+            <a href="https://linkedin.com/in/sri-harsha-sripada-489577341" target="_blank" rel="noreferrer" className="px-10 py-4 rounded-xl border border-white/20 hover:border-cyan-500/50 hover:bg-white/5 transition-all flex items-center gap-2 cursor-none">
               <FaLinkedin className="w-5 h-5" /> LinkedIn
             </a>
           </motion.div>
         </div>
       </section>
+
+      {/* AI Chatbot Widget */}
+      <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end pointer-events-auto">
+        {/* Chat Window */}
+        {isChatOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="mb-4 w-80 md:w-96 rounded-2xl border border-purple-500/30 bg-black/80 backdrop-blur-xl shadow-[0_0_30px_rgba(168,85,247,0.2)] overflow-hidden flex flex-col cursor-auto"
+          >
+            {/* Header */}
+            <div className="bg-purple-600/20 px-4 py-3 border-b border-purple-500/20 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <FaRobot className="text-purple-400 w-5 h-5" />
+                <span className="font-semibold text-purple-100">Ask My AI</span>
+              </div>
+              <button onClick={() => setIsChatOpen(false)} className="text-gray-400 hover:text-white transition-colors cursor-none">
+                <FaTimes />
+              </button>
+            </div>
+            
+            {/* Messages */}
+            <div className="h-64 overflow-y-auto p-4 space-y-4 text-sm flex flex-col">
+              {chatMessages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] rounded-xl px-4 py-2 ${msg.role === 'user' ? 'bg-cyan-500/20 border border-cyan-500/30 text-cyan-100 rounded-tr-none' : 'bg-white/5 border border-white/10 text-gray-300 rounded-tl-none'}`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Input */}
+            <form onSubmit={handleChatSubmit} className="p-3 border-t border-white/10 bg-black/40 flex gap-2">
+              <input 
+                type="text" 
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder="Ask about my projects..." 
+                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500/50 cursor-none"
+              />
+              <button type="submit" className="bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500 hover:text-black text-purple-400 rounded-lg px-3 flex items-center justify-center transition-all cursor-none">
+                <FaPaperPlane className="w-3 h-3" />
+              </button>
+            </form>
+          </motion.div>
+        )}
+
+        {/* Floating Button */}
+        <button 
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] flex items-center justify-center text-white transition-all hover:scale-110 cursor-none"
+        >
+          {isChatOpen ? <FaTimes className="w-6 h-6" /> : <FaRobot className="w-6 h-6" />}
+        </button>
+      </div>
 
     </div>
   );

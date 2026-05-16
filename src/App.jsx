@@ -180,20 +180,37 @@ export default function Portfolio() {
         style={{ scaleX }}
       />
 
-      {/* Custom Cursor */}
+      {/* AI Object Detection Cursor */}
       <motion.div 
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyan-400 pointer-events-none z-[9999] mix-blend-screen transition-transform duration-100 ease-out"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-screen flex items-center justify-center"
         animate={{ 
-          x: mousePosition.x - 16, 
-          y: mousePosition.y - 16,
-          scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? 'rgba(34, 211, 238, 0.1)' : 'transparent'
+          x: mousePosition.x - 24, 
+          y: mousePosition.y - 24,
+          scale: isHovering ? 1.2 : 1,
+          rotate: isHovering ? 45 : 0
         }}
-      />
+        transition={{ type: "spring", stiffness: 300, damping: 28, mass: 0.5 }}
+      >
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Bounding Box Corners */}
+          <path d="M 6 16 L 6 6 L 16 6" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
+          <path d="M 32 6 L 42 6 L 42 16" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
+          <path d="M 6 32 L 6 42 L 16 42" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
+          <path d="M 42 32 L 42 42 L 32 42" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
+          
+          {/* Target acquired elements */}
+          {isHovering && (
+             <g>
+               <circle cx="24" cy="24" r="2" fill="#a855f7" className="animate-pulse" />
+               <circle cx="24" cy="24" r="10" stroke="#a855f7" strokeWidth="1" strokeDasharray="2 4" className="animate-[spin_4s_linear_infinite]" />
+             </g>
+          )}
+        </svg>
+      </motion.div>
       <motion.div 
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-cyan-300 pointer-events-none z-[9999]"
-        animate={{ x: mousePosition.x - 4, y: mousePosition.y - 4 }}
-        transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[9999] shadow-[0_0_8px_#22d3ee]"
+        animate={{ x: mousePosition.x - 3, y: mousePosition.y - 3, opacity: isHovering ? 0 : 1 }}
+        transition={{ type: "just" }}
       />
 
       {/* Interactive Background Particles */}

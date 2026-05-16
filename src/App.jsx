@@ -189,7 +189,12 @@ export default function Portfolio() {
           scale: isHovering ? 1.2 : 1,
           rotate: isHovering ? 45 : 0
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 28, mass: 0.5 }}
+        transition={{ 
+          x: { type: "tween", duration: 0 },
+          y: { type: "tween", duration: 0 },
+          scale: { type: "spring", stiffness: 300, damping: 20 },
+          rotate: { type: "spring", stiffness: 300, damping: 20 }
+        }}
       >
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Bounding Box Corners */}
@@ -210,7 +215,11 @@ export default function Portfolio() {
       <motion.div 
         className="fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[9999] shadow-[0_0_8px_#22d3ee]"
         animate={{ x: mousePosition.x - 3, y: mousePosition.y - 3, opacity: isHovering ? 0 : 1 }}
-        transition={{ type: "just" }}
+        transition={{ 
+          x: { type: "tween", duration: 0 },
+          y: { type: "tween", duration: 0 },
+          opacity: { duration: 0.2 }
+        }}
       />
 
       {/* Interactive Background Particles */}

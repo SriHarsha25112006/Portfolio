@@ -81,13 +81,14 @@ export default function Portfolio() {
             className="flex items-center gap-2"
           >
             <FaBrain className="text-cyan-400 w-8 h-8" />
-            <h1 className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">HARSHA.SYS //</h1>
+            <h1 className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Sriharsha.AI</h1>
           </motion.div>
-          <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
             <a href="#about" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">About</a>
             <a href="#projects" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Projects</a>
             <a href="#skills" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Skills</a>
             <a href="#achievements" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Achievements</a>
+            <a href="mailto:sriharshasripada25@gmail.com" className="px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all">Email Me</a>
           </div>
         </div>
       </nav>
@@ -145,20 +146,26 @@ export default function Portfolio() {
             className="relative hidden lg:block"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-[3rem] blur-3xl animate-pulse"></div>
-            <div className="relative h-[600px] w-full rounded-[3rem] border border-white/10 bg-black/40 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col justify-center items-center p-8">
-              <FaMicrochip className="w-32 h-32 text-cyan-500/50 mb-8 animate-bounce" style={{ animationDuration: '3s' }} />
-              <div className="w-full space-y-4">
-                 <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-cyan-500 w-[95%] shadow-[0_0_10px_#06b6d4]"></div>
-                 </div>
-                 <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-purple-500 w-[85%] shadow-[0_0_10px_#a855f7]"></div>
-                 </div>
-                 <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 w-[90%] shadow-[0_0_10px_#3b82f6]"></div>
-                 </div>
+            <div className="relative h-[500px] w-full rounded-[2rem] border border-white/10 bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col p-8 font-mono text-sm md:text-base">
+              <div className="flex gap-2 mb-6 border-b border-white/10 pb-4">
+                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
               </div>
-              <p className="mt-8 text-cyan-400 font-mono text-sm tracking-widest uppercase animate-pulse">System Operational</p>
+              <div className="text-gray-400 space-y-3">
+                <p><span className="text-purple-400">import</span> <span className="text-white">brain</span></p>
+                <p><span className="text-purple-400">from</span> <span className="text-white">future</span> <span className="text-purple-400">import</span> <span className="text-white">ai_agent</span></p>
+                <br/>
+                <p><span className="text-cyan-400">def</span> <span className="text-blue-400">initialize_engineer</span>():</p>
+                <p className="pl-6"><span className="text-white">skills</span> = [<span className="text-green-400">"TensorFlow"</span>, <span className="text-green-400">"PyTorch"</span>, <span className="text-green-400">"CV"</span>]</p>
+                <p className="pl-6"><span className="text-white">focus</span> = <span className="text-green-400">"Agentic AI Systems"</span></p>
+                <p className="pl-6"><span className="text-purple-400">return</span> <span className="text-white">skills</span>, <span className="text-white">focus</span></p>
+                <br/>
+                <p className="text-gray-500"># Model Training Initiated...</p>
+                <p className="text-cyan-400 animate-pulse">Epoch 1/100: Loss = 0.0421, Acc = 99.63% 🚀</p>
+                <p className="text-cyan-400 animate-pulse" style={{ animationDelay: '0.5s' }}>Deploying to production...</p>
+                <p className="mt-4 text-green-400">✓ System Ready.</p>
+              </div>
             </div>
           </motion.div>
         </div>

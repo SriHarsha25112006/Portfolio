@@ -81,7 +81,7 @@ export default function Portfolio() {
             className="flex items-center gap-2"
           >
             <FaBrain className="text-cyan-400 w-8 h-8" />
-            <h1 className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Sriharsha.AI</h1>
+            <h1 className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">HARSHA.SYS //</h1>
           </motion.div>
           <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
             <a href="#about" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">About</a>
@@ -124,11 +124,9 @@ export default function Portfolio() {
               </a>
             </motion.div>
 
-            <motion.div variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12">
+            <motion.div variants={staggerContainer} className="grid grid-cols-2 gap-4 pt-12 max-w-sm">
               {[
                 { label: 'Current CGPA', value: '9.26', color: 'cyan' },
-                { label: 'Images Processed', value: '26k+', color: 'purple' },
-                { label: 'Best Accuracy', value: '99.6%', color: 'blue' },
                 { label: 'JEE Mains', value: 'AIR 3504', color: 'pink' },
               ].map((stat, i) => (
                 <motion.div key={i} variants={fadeInUp} className="relative group rounded-2xl bg-black/50 border border-white/10 p-5 backdrop-blur-sm overflow-hidden">

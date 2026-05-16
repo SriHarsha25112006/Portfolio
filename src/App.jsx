@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
 
 export default function Portfolio() {
@@ -34,13 +34,8 @@ export default function Portfolio() {
     return () => window.removeEventListener('mouseover', handleMouseOver);
   }, []);
 
-  // Particles Init
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
+  const particlesInit = useCallback(async engine => {
+    await loadFull(engine);
   }, []);
 
   // Terminal State
@@ -202,10 +197,10 @@ export default function Portfolio() {
       />
 
       {/* Interactive Background Particles */}
-      {init && (
-        <Particles
-          id="tsparticles"
-          className="absolute inset-0 z-0 pointer-events-none"
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        className="absolute inset-0 z-0 pointer-events-none"
           options={{
             background: { color: { value: "transparent" } },
             fpsLimit: 60,
@@ -240,9 +235,8 @@ export default function Portfolio() {
               size: { value: { min: 1, max: 2 } },
             },
             detectRetina: true,
-          }}
-        />
-      )}
+        }}
+      />
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)]">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ExternalLink, Code2, Cpu, BrainCircuit, Rocket, Trophy, Briefcase } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase } from 'react-icons/fa';
 
 export default function Portfolio() {
   const projects = [
@@ -80,7 +80,7 @@ export default function Portfolio() {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-2"
           >
-            <BrainCircuit className="text-cyan-400 w-8 h-8" />
+            <FaBrain className="text-cyan-400 w-8 h-8" />
             <h1 className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Sriharsha.AI</h1>
           </motion.div>
           <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
@@ -116,11 +116,11 @@ export default function Portfolio() {
 
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
               <a href="mailto:sriharshasripada25@gmail.com" className="group relative px-8 py-3 bg-cyan-500 text-black font-bold rounded-xl overflow-hidden shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all">
-                <span className="relative z-10 flex items-center gap-2"><Mail className="w-4 h-4" /> Initialize Contact</span>
+                <span className="relative z-10 flex items-center gap-2"><FaEnvelope className="w-4 h-4" /> Initialize Contact</span>
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
               </a>
               <a href="https://github.com/SriHarsha25112006" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-8 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all">
-                <Github className="w-5 h-5" /> GitHub
+                <FaGithub className="w-5 h-5" /> GitHub
               </a>
             </motion.div>
 
@@ -148,7 +148,7 @@ export default function Portfolio() {
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-[3rem] blur-3xl animate-pulse"></div>
             <div className="relative h-[600px] w-full rounded-[3rem] border border-white/10 bg-black/40 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col justify-center items-center p-8">
-              <Cpu className="w-32 h-32 text-cyan-500/50 mb-8 animate-bounce" style={{ animationDuration: '3s' }} />
+              <FaMicrochip className="w-32 h-32 text-cyan-500/50 mb-8 animate-bounce" style={{ animationDuration: '3s' }} />
               <div className="w-full space-y-4">
                  <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                     <div className="h-full bg-cyan-500 w-[95%] shadow-[0_0_10px_#06b6d4]"></div>
@@ -160,7 +160,7 @@ export default function Portfolio() {
                     <div className="h-full bg-blue-500 w-[90%] shadow-[0_0_10px_#3b82f6]"></div>
                  </div>
               </div>
-              <p className="mt-8 text-cyan-400 font-mono text-sm tracking-widest uppercase animate-pulse">System Systems Operational</p>
+              <p className="mt-8 text-cyan-400 font-mono text-sm tracking-widest uppercase animate-pulse">System Operational</p>
             </div>
           </motion.div>
         </div>
@@ -174,7 +174,7 @@ export default function Portfolio() {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div className="flex items-center gap-4 mb-8">
-            <Briefcase className="text-cyan-400 w-8 h-8" />
+            <FaBriefcase className="text-cyan-400 w-8 h-8" />
             <h2 className="text-4xl font-bold tracking-tight">About Me</h2>
           </div>
           <p className="text-gray-300 leading-relaxed text-xl max-w-4xl font-light">
@@ -186,7 +186,7 @@ export default function Portfolio() {
       {/* Projects Section */}
       <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="flex items-center gap-4 mb-16">
-          <Code2 className="text-cyan-400 w-8 h-8" />
+          <FaCode className="text-cyan-400 w-8 h-8" />
           <h2 className="text-4xl font-bold tracking-tight">System Deployments</h2>
         </motion.div>
 
@@ -199,10 +199,10 @@ export default function Portfolio() {
               className="group relative block rounded-[2rem] border border-white/10 bg-black/40 backdrop-blur-sm p-8 hover:-translate-y-2 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]"
             >
               <div className="absolute top-8 right-8 text-white/20 group-hover:text-cyan-400 transition-colors">
-                <ExternalLink className="w-6 h-6" />
+                <FaExternalLinkAlt className="w-5 h-5" />
               </div>
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-cyan-500/50 transition-all">
-                <Rocket className="w-6 h-6 text-cyan-400" />
+                <FaRocket className="w-6 h-6 text-cyan-400" />
               </div>
               <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-500 transition-all">{project.title}</h3>
               <p className="text-gray-400 leading-relaxed mb-8">{project.desc}</p>
@@ -222,7 +222,7 @@ export default function Portfolio() {
       {/* Skills Section */}
       <section id="skills" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="flex items-center gap-4 mb-16">
-          <Cpu className="text-cyan-400 w-8 h-8" />
+          <FaMicrochip className="text-cyan-400 w-8 h-8" />
           <h2 className="text-4xl font-bold tracking-tight">Tech Stack</h2>
         </motion.div>
         
@@ -249,7 +249,7 @@ export default function Portfolio() {
       {/* Achievements Section */}
       <section id="achievements" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="flex items-center gap-4 mb-16">
-          <Trophy className="text-cyan-400 w-8 h-8" />
+          <FaTrophy className="text-cyan-400 w-8 h-8" />
           <h2 className="text-4xl font-bold tracking-tight">Milestones</h2>
         </motion.div>
 
@@ -281,10 +281,10 @@ export default function Portfolio() {
           </motion.p>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="flex justify-center gap-6">
             <a href="mailto:sriharshasripada25@gmail.com" className="px-10 py-4 rounded-xl bg-cyan-500 text-black font-bold hover:bg-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all flex items-center gap-2">
-              <Mail className="w-5 h-5" /> Connect
+              <FaEnvelope className="w-5 h-5" /> Connect
             </a>
             <a href="https://linkedin.com/in/sri-harsha-sripada-489577341" target="_blank" rel="noreferrer" className="px-10 py-4 rounded-xl border border-white/20 hover:border-cyan-500/50 hover:bg-white/5 transition-all flex items-center gap-2">
-              <Linkedin className="w-5 h-5" /> LinkedIn
+              <FaLinkedin className="w-5 h-5" /> LinkedIn
             </a>
           </motion.div>
         </div>

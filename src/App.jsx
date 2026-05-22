@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane, FaBook } from 'react-icons/fa';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
+import AlgorithmPage from './AlgorithmPage';
 
 export default function Portfolio() {
   const [init, setInit] = useState(false);
+  const [showAlgorithm, setShowAlgorithm] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -115,7 +117,8 @@ export default function Portfolio() {
       title: 'Inverse-Correlation Naive Bayes',
       desc: 'A mathematically principled extension to scikit-learn\'s GaussianNB that solves the double-counting flaw using Precision Matrix weighting. Achieved up to 21% accuracy improvement on OpenML datasets.',
       link: 'https://github.com/SriHarsha25112006/Naive-Bayes-Improvement',
-      tags: ['Python', 'Machine Learning', 'Mathematics', 'Scikit-Learn']
+      tags: ['Python', 'Machine Learning', 'Mathematics', 'Scikit-Learn'],
+      hasAlgorithmPage: true
     },
     {
       title: 'OmniLens-Pro',
@@ -188,7 +191,7 @@ export default function Portfolio() {
 
       {/* AI Object Detection Cursor */}
       <motion.div 
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-screen flex items-center justify-center"
+        className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen flex items-center justify-center"
         animate={{ 
           x: mousePosition.x - 24, 
           y: mousePosition.y - 24,
@@ -219,7 +222,7 @@ export default function Portfolio() {
         </svg>
       </motion.div>
       <motion.div 
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[9999] shadow-[0_0_8px_#22d3ee]"
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[999999] shadow-[0_0_8px_#22d3ee]"
         animate={{ x: mousePosition.x - 3, y: mousePosition.y - 3, opacity: isHovering ? 0 : 1 }}
         transition={{ 
           x: { type: "tween", duration: 0 },
@@ -429,12 +432,21 @@ export default function Portfolio() {
                   <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-500 transition-all">{project.title}</h3>
                   <p className="text-gray-400 leading-relaxed mb-8 flex-1">{project.desc}</p>
                   
-                  <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
+                  <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5 relative pr-12">
                     {project.tags.map((tag, i) => (
                       <span key={i} className="px-3 py-1 rounded-md bg-white/5 border border-white/5 text-xs text-gray-300 font-mono tracking-wide group-hover:border-cyan-500/30 group-hover:text-cyan-200 transition-colors">
                         {tag}
                       </span>
                     ))}
+                    {project.hasAlgorithmPage && (
+                      <button 
+                        onClick={(e) => { e.preventDefault(); setShowAlgorithm(true); }}
+                        className="absolute bottom-0 right-0 w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 hover:bg-purple-500/30 flex items-center justify-center text-purple-400 transition-all cursor-none z-10 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                        title="Read Algorithm Deep Dive"
+                      >
+                        <FaBook />
+                      </button>
+                    )}
                   </div>
                 </a>
               </Tilt>
@@ -570,6 +582,10 @@ export default function Portfolio() {
           {isChatOpen ? <FaTimes className="w-6 h-6" /> : <FaRobot className="w-6 h-6" />}
         </button>
       </div>
+
+      <AnimatePresence>
+        {showAlgorithm && <AlgorithmPage onClose={() => setShowAlgorithm(false)} />}
+      </AnimatePresence>
 
     </div>
   );

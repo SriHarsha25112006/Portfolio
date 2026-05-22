@@ -5,10 +5,14 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
 import AlgorithmPage from './AlgorithmPage';
+import HeroParticleBrain from './HeroParticleBrain';
+import HeroMatrixMath from './HeroMatrixMath';
+import HeroBlackHole from './HeroBlackHole';
 
 export default function Portfolio() {
   const [init, setInit] = useState(false);
   const [showAlgorithm, setShowAlgorithm] = useState(false);
+  const [currentHero, setCurrentHero] = useState('brain'); // 'brain', 'matrix', 'blackhole'
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -62,7 +66,7 @@ export default function Portfolio() {
     // Simulated AI response
     setTimeout(() => {
       const lowerMsg = userMsg.toLowerCase();
-      let aiResponse = "That's an interesting question! You can email Harsha directly at sriharshasripada25@gmail.com for more details.";
+      let aiResponse = "I'm sorry, I'm still learning and don't quite understand that yet! But you can reach out to Sriharsha directly at sriharshasripada25@gmail.com, and he'd be happy to talk to you.";
       
       if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built') || lowerMsg.includes('work') || lowerMsg.includes('system')) {
         aiResponse = "Harsha has built incredible systems like OmniLens-Pro, Inverse-Correlation Naive Bayes (a novel ML classifier), and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
@@ -74,6 +78,8 @@ export default function Portfolio() {
         aiResponse = "You can reach out to him directly at sriharshasripada25@gmail.com, or check out his GitHub (SriHarsha25112006) and LinkedIn!";
       } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa') || lowerMsg.includes('college') || lowerMsg.includes('university') || lowerMsg.includes('school') || lowerMsg.includes('nit') || lowerMsg.includes('jee')) {
         aiResponse = "He is currently a B.Tech student at NIT Warangal with a stellar 9.26 CGPA. He also secured AIR 3504 in JEE Mains!";
+      } else if (lowerMsg.includes('name') || lowerMsg.includes('who are you talking about') || lowerMsg.includes('who is this')) {
+        aiResponse = "I'm talking about Sriharsha Sripada, an AI & Data Science Engineer!";
       } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey') || lowerMsg.includes('greetings')) {
         aiResponse = "Hello there! I'm Sriharsha's AI assistant. Ask me about his experience, projects, skills, or education!";
       } else if (lowerMsg.includes('who are you') || lowerMsg.includes('what are you') || lowerMsg.includes('bot')) {
@@ -203,47 +209,32 @@ export default function Portfolio() {
         }}
       />
 
-      {/* Interactive Background Particles */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        className="absolute inset-0 z-0 pointer-events-none"
-          options={{
-            background: { color: { value: "transparent" } },
-            fpsLimit: 60,
-            interactivity: {
-              events: {
-                onHover: { enable: true, mode: "grab" },
-              },
-              modes: {
-                grab: { distance: 140, links: { opacity: 0.5 } },
-              },
-            },
-            particles: {
-              color: { value: "#22d3ee" },
-              links: {
-                color: "#a855f7",
-                distance: 150,
-                enable: true,
-                opacity: 0.2,
-                width: 1,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: { default: "bounce" },
-                random: false,
-                speed: 0.8,
-                straight: false,
-              },
-              number: { density: { enable: true, area: 800 }, value: 40 },
-              opacity: { value: 0.3 },
-              shape: { type: "circle" },
-              size: { value: { min: 1, max: 2 } },
-            },
-            detectRetina: true,
-        }}
-      />
+      {/* Dynamic Hero Background */}
+      {currentHero === 'brain' && <HeroParticleBrain />}
+      {currentHero === 'matrix' && <HeroMatrixMath />}
+      {currentHero === 'blackhole' && <HeroBlackHole />}
+      
+      {/* Hero Switcher UI (Temporary) */}
+      <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex gap-2 p-2 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+        <button 
+          onClick={() => setCurrentHero('brain')}
+          className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-none ${currentHero === 'brain' ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.6)]' : 'text-gray-400 hover:text-cyan-400'}`}
+        >
+          Particle Brain
+        </button>
+        <button 
+          onClick={() => setCurrentHero('matrix')}
+          className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-none ${currentHero === 'matrix' ? 'bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.6)]' : 'text-gray-400 hover:text-purple-400'}`}
+        >
+          ML Matrix Rain
+        </button>
+        <button 
+          onClick={() => setCurrentHero('blackhole')}
+          className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-none ${currentHero === 'blackhole' ? 'bg-pink-500 text-white shadow-[0_0_15px_rgba(236,72,153,0.6)]' : 'text-gray-400 hover:text-pink-400'}`}
+        >
+          Data Singularity
+        </button>
+      </div>
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)]">
@@ -313,75 +304,6 @@ export default function Portfolio() {
             </motion.div>
           </motion.div>
 
-          {/* Interactive AI Core Hero */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative hidden lg:flex justify-center items-center z-20 h-[500px]"
-          >
-            {/* Ambient Glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
-            
-            {/* Central Core Element */}
-            <div className="relative w-80 h-80 flex items-center justify-center cursor-none">
-              {/* Outer rings */}
-              <motion.div 
-                className="absolute inset-0 rounded-full border border-cyan-500/30 border-dashed"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div 
-                className="absolute inset-4 rounded-full border border-purple-500/40"
-                style={{ borderTopWidth: 4, borderRightWidth: 1 }}
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div 
-                className="absolute inset-8 rounded-full border-2 border-cyan-400/20"
-                style={{ borderBottomWidth: 4 }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              />
-
-              {/* Core Sphere */}
-              <motion.div 
-                className="relative w-40 h-40 rounded-full bg-gradient-to-br from-cyan-400 to-purple-600 shadow-[0_0_50px_rgba(6,182,212,0.8)] flex items-center justify-center overflow-hidden"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 80px rgba(168,85,247,0.8)" }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                {/* Inner core waves */}
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjAyIiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjMiIG1peC1ibGVuZC1tb2RlPSJvdmVybGF5Ii8+PC9zdmc+')] opacity-50 mix-blend-overlay"></div>
-                <FaBrain className="w-16 h-16 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] animate-pulse relative z-10" />
-              </motion.div>
-
-              {/* Orbital Nodes */}
-              {[...Array(6)].map((_, i) => (
-                <motion.div 
-                  key={i}
-                  className="absolute w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8)]"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                    marginTop: -6,
-                    marginLeft: -6,
-                  }}
-                  animate={{
-                    x: Math.cos((i * 60) * (Math.PI / 180)) * 140,
-                    y: Math.sin((i * 60) * (Math.PI / 180)) * 140,
-                  }}
-                  transition={{ type: "spring", duration: 2 }}
-                />
-              ))}
-            </div>
-            
-            {/* Holographic Text */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center w-full">
-              <div className="text-cyan-400 font-mono text-sm tracking-widest uppercase bg-black/50 inline-block px-4 py-1 rounded-full border border-cyan-500/30">
-                Neural Core Active
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 

@@ -64,17 +64,19 @@ export default function Portfolio() {
       const lowerMsg = userMsg.toLowerCase();
       let aiResponse = "That's an interesting question! You can email Harsha directly at sriharshasripada25@gmail.com for more details.";
       
-      if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built') || lowerMsg.includes('work')) {
+      if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built') || lowerMsg.includes('work') || lowerMsg.includes('system')) {
         aiResponse = "Harsha has built incredible systems like OmniLens-Pro, Inverse-Correlation Naive Bayes (a novel ML classifier), and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
-      } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack') || lowerMsg.includes('language') || lowerMsg.includes('know')) {
+      } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack') || lowerMsg.includes('language') || lowerMsg.includes('know') || lowerMsg.includes('tool')) {
         aiResponse = "His core stack includes Python, C++, TensorFlow, PyTorch, and React. He specializes in Machine Learning pipelines and Agentic AI Systems.";
-      } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email') || lowerMsg.includes('reach')) {
-        aiResponse = "You can reach out to him directly at sriharshasripada25@gmail.com or connect with him on LinkedIn!";
-      } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa') || lowerMsg.includes('college') || lowerMsg.includes('university') || lowerMsg.includes('school')) {
+      } else if (lowerMsg.includes('experience') || lowerMsg.includes('background') || lowerMsg.includes('intern') || lowerMsg.includes('job') || lowerMsg.includes('role') || lowerMsg.includes('about')) {
+        aiResponse = "Harsha is an AI & Data Science Engineer focused on building Agentic AI Systems, Machine Learning pipelines, and advanced CV models. He has a strong mathematical foundation and thrives at translating complex research into scalable products.";
+      } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email') || lowerMsg.includes('reach') || lowerMsg.includes('linkedin') || lowerMsg.includes('github') || lowerMsg.includes('connect')) {
+        aiResponse = "You can reach out to him directly at sriharshasripada25@gmail.com, or check out his GitHub (SriHarsha25112006) and LinkedIn!";
+      } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa') || lowerMsg.includes('college') || lowerMsg.includes('university') || lowerMsg.includes('school') || lowerMsg.includes('nit') || lowerMsg.includes('jee')) {
         aiResponse = "He is currently a B.Tech student at NIT Warangal with a stellar 9.26 CGPA. He also secured AIR 3504 in JEE Mains!";
-      } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
-        aiResponse = "Hello there! I'm Sriharsha's AI assistant. Ask me about his projects, skills, or education!";
-      } else if (lowerMsg.includes('who are you') || lowerMsg.includes('what are you')) {
+      } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey') || lowerMsg.includes('greetings')) {
+        aiResponse = "Hello there! I'm Sriharsha's AI assistant. Ask me about his experience, projects, skills, or education!";
+      } else if (lowerMsg.includes('who are you') || lowerMsg.includes('what are you') || lowerMsg.includes('bot')) {
         aiResponse = "I am a simulated AI assistant built specifically for this portfolio, designed to help you learn more about Sriharsha's capabilities!";
       }
 

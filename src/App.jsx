@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane, FaBook } from 'react-icons/fa';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
@@ -14,16 +14,18 @@ export default function Portfolio() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   // Custom Cursor State
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
   useEffect(() => {
     const handleMouseOver = (e) => {
@@ -215,15 +217,12 @@ export default function Portfolio() {
       {/* AI Object Detection Cursor */}
       <motion.div 
         className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen flex items-center justify-center"
+        style={{ x: mouseX, y: mouseY, translateX: "-24px", translateY: "-24px" }}
         animate={{ 
-          x: mousePosition.x - 24, 
-          y: mousePosition.y - 24,
           scale: isHovering ? 1.2 : 1,
           rotate: isHovering ? 45 : 0
         }}
         transition={{ 
-          x: { type: "tween", duration: 0 },
-          y: { type: "tween", duration: 0 },
           scale: { type: "spring", stiffness: 300, damping: 20 },
           rotate: { type: "spring", stiffness: 300, damping: 20 }
         }}
@@ -246,12 +245,9 @@ export default function Portfolio() {
       </motion.div>
       <motion.div 
         className="fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[999999] shadow-[0_0_8px_#22d3ee]"
-        animate={{ x: mousePosition.x - 3, y: mousePosition.y - 3, opacity: isHovering ? 0 : 1 }}
-        transition={{ 
-          x: { type: "tween", duration: 0 },
-          y: { type: "tween", duration: 0 },
-          opacity: { duration: 0.2 }
-        }}
+        style={{ x: mouseX, y: mouseY, translateX: "-3px", translateY: "-3px" }}
+        animate={{ opacity: isHovering ? 0 : 1 }}
+        transition={{ opacity: { duration: 0.2 } }}
       />
 
       {/* Interactive Background Particles */}

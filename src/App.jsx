@@ -96,14 +96,14 @@ export default function Portfolio() {
           aiResponse = "I specialize only in Sriharsha's portfolio. For other topics, please contact him directly.";
         } else {
           const intents = {
-            identity: { keys: ['\\\\bbot\\\\b', '\\\\bai\\\\b', 'who are you', 'what are you', 'your name', 'who r u', 'ur name'], res: "I am an AI assistant built to guide you through Sriharsha's portfolio." },
+            identity: { keys: ['\\bbot\\b', '\\bai\\b', 'who are you', 'what are you', 'your name', 'who r u', 'ur name'], res: "I am an AI assistant built to guide you through Sriharsha's portfolio." },
             subject: { keys: ['who is this', 'whose portfolio', 'name is he', 'his name'], res: "Sriharsha Sripada, an AI & Data Science Engineer." },
-            projects: { keys: ['\\\\bproject', '\\\\bportfolio', '\\\\bbuilt\\\\b', '\\\\bbuild\\\\b', '\\\\bwork\\\\b', 'omnilens', 'yolo', 'github', 'naive bayes'], res: "He built OmniLens-Pro, Inverse-Correlation Naive Bayes, and a YOLOv8 Military Object Detection system. See 'System Deployments'." },
-            skills: { keys: ['\\\\bskill', '\\\\btech', '\\\\bstack', '\\\\blanguage', '\\\\btool', '\\\\bpython\\\\b', '\\\\bc\\\\+\\\\+', '\\\\breact', 'tensorflow', 'pytorch'], res: "Core stack: Python, C++, TensorFlow, PyTorch, React. Specializes in ML pipelines and Agentic AI." },
-            experience: { keys: ['\\\\bexperience', '\\\\bbackground', '\\\\bintern', '\\\\bjob\\\\b', '\\\\brole', '\\\\bcareer', '\\\\bresume', 'done any work'], res: "He is an AI & Data Science Engineer focusing on Agentic AI Systems, ML pipelines, and advanced CV models." },
-            education: { keys: ['\\\\beducation', '\\\\bstudy', '\\\\bcgpa\\\\b', '\\\\bgpa\\\\b', '\\\\bcollege', 'university', 'school', '\\\\bnit\\\\b', 'jee', '\\\\bdegree', 'btech', 'b.tech', 'mains', 'rank', 'advanced', 'air', 'achievements', 'accomplishments'], res: "B.Tech at NIT Warangal (9.26 CGPA). Secured AIR 3504 in JEE Mains and AIR 8072 in JEE Advanced." },
-            contact: { keys: ['contact', '\\\\bhire\\\\b', 'email', '\\\\breach', 'linkedin', 'connect', 'phone', 'call'], res: "Email him at sriharshasripada25@gmail.com." },
-            greetings: { keys: ['\\\\bhello\\\\b', '\\\\bhi\\\\b', '\\\\bhey\\\\b', 'greetings'], res: "Hello! Ask me about Sriharsha's projects, skills, or experience." }
+            projects: { keys: ['\\bproject', '\\bportfolio', '\\bbuilt\\b', '\\bbuild\\b', '\\bwork\\b', 'omnilens', 'yolo', 'github', 'naive bayes'], res: "He built OmniLens-Pro, Inverse-Correlation Naive Bayes, and a YOLOv8 Military Object Detection system. See 'System Deployments'." },
+            skills: { keys: ['\\bskill', '\\btech', '\\bstack', '\\blanguage', '\\btool', '\\bpython\\b', '\\bc\\\\+\\\\+', '\\breact', 'tensorflow', 'pytorch'], res: "Core stack: Python, C++, TensorFlow, PyTorch, React. Specializes in ML pipelines and Agentic AI." },
+            experience: { keys: ['\\bexperience', '\\bbackground', '\\bintern', '\\bjob\\b', '\\brole', '\\bcareer', '\\bresume', 'done any work'], res: "He is an AI & Data Science Engineer focusing on Agentic AI Systems, ML pipelines, and advanced CV models." },
+            education: { keys: ['\\beducation', '\\bstudy', '\\bcgpa\\b', '\\bgpa\\b', '\\bcollege', 'university', 'school', '\\bnit\\b', 'jee', '\\bdegree', 'btech', 'b.tech', 'mains', 'rank', 'advanced', 'air', 'achievements', 'accomplishments'], res: "B.Tech at NIT Warangal (9.26 CGPA). Secured AIR 3504 in JEE Mains and AIR 8072 in JEE Advanced." },
+            contact: { keys: ['contact', '\\bhire\\b', 'email', '\\breach', 'linkedin', 'connect', 'phone', 'call'], res: "Email him at sriharshasripada25@gmail.com." },
+            greetings: { keys: ['\\bhello\\b', '\\bhi\\b', '\\bhey\\b', 'greetings'], res: "Hello! Ask me about Sriharsha's projects, skills, or experience." }
           };
 
           let bestIntent = null;

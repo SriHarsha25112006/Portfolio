@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane, FaBook } from 'react-icons/fa';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
 import AlgorithmPage from './AlgorithmPage';
-import HeroNeuralBrain from './HeroNeuralBrain';
+import HeroParticleBrain from './HeroParticleBrain';
 
 export default function Portfolio() {
   const [init, setInit] = useState(false);
@@ -50,6 +50,13 @@ export default function Portfolio() {
   const [chatMessages, setChatMessages] = useState([
     { role: 'ai', text: "Hello! I'm Sriharsha's virtual AI assistant. Ask me anything about his experience, projects, or skills!" }
   ]);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatMessages, isChatOpen]);
 
   const handleChatSubmit = (e) => {
     e.preventDefault();
@@ -62,25 +69,64 @@ export default function Portfolio() {
 
     // Simulated AI response
     setTimeout(() => {
-      const lowerMsg = userMsg.toLowerCase();
-      let aiResponse = "I'm sorry, I'm still learning and don't quite understand that yet! But you can reach out to Sriharsha directly at sriharshasripada25@gmail.com, and he'd be happy to talk to you.";
+      let msg = userMsg.toLowerCase().trim();
+      let aiResponse = "I'm sorry, could you please clarify?";
       
-      if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built') || lowerMsg.includes('work') || lowerMsg.includes('system')) {
-        aiResponse = "Harsha has built incredible systems like OmniLens-Pro, Inverse-Correlation Naive Bayes (a novel ML classifier), and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
-      } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack') || lowerMsg.includes('language') || lowerMsg.includes('know') || lowerMsg.includes('tool')) {
-        aiResponse = "His core stack includes Python, C++, TensorFlow, PyTorch, and React. He specializes in Machine Learning pipelines and Agentic AI Systems.";
-      } else if (lowerMsg.includes('experience') || lowerMsg.includes('background') || lowerMsg.includes('intern') || lowerMsg.includes('job') || lowerMsg.includes('role') || lowerMsg.includes('about')) {
-        aiResponse = "Harsha is an AI & Data Science Engineer focused on building Agentic AI Systems, Machine Learning pipelines, and advanced CV models. He has a strong mathematical foundation and thrives at translating complex research into scalable products.";
-      } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email') || lowerMsg.includes('reach') || lowerMsg.includes('linkedin') || lowerMsg.includes('github') || lowerMsg.includes('connect')) {
-        aiResponse = "You can reach out to him directly at sriharshasripada25@gmail.com, or check out his GitHub (SriHarsha25112006) and LinkedIn!";
-      } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa') || lowerMsg.includes('college') || lowerMsg.includes('university') || lowerMsg.includes('school') || lowerMsg.includes('nit') || lowerMsg.includes('jee')) {
-        aiResponse = "He is currently a B.Tech student at NIT Warangal with a stellar 9.26 CGPA. He also secured AIR 3504 in JEE Mains!";
-      } else if (lowerMsg.includes('name') || lowerMsg.includes('who are you talking about') || lowerMsg.includes('who is this')) {
-        aiResponse = "I'm talking about Sriharsha Sripada, an AI & Data Science Engineer!";
-      } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey') || lowerMsg.includes('greetings')) {
-        aiResponse = "Hello there! I'm Sriharsha's AI assistant. Ask me about his experience, projects, skills, or education!";
-      } else if (lowerMsg.includes('who are you') || lowerMsg.includes('what are you') || lowerMsg.includes('bot')) {
-        aiResponse = "I am a simulated AI assistant built specifically for this portfolio, designed to help you learn more about Sriharsha's capabilities!";
+      if (msg.length >= 2) {
+        const corrections = {
+          'expernce': 'experience',
+          'edcation': 'education',
+          'projets': 'projects',
+          'cntact': 'contact',
+          'wat': 'what',
+          'ur': 'your',
+          'r': 'are',
+          'u': 'you'
+        };
+        msg = msg.split(/\\W+/).map(w => corrections[w] || w).join(' ');
+
+        const outOfScopePatterns = [
+          'weather', 'joke', 'recipe', 'cook', 'bake', 'capital', 'movie', 'song', 
+          'president', 'sports', 'football', 'math', 'homework', 'poem', 'cake', 'eggs'
+        ];
+
+        if (outOfScopePatterns.some(w => msg.includes(w))) {
+          aiResponse = "I specialize only in Sriharsha's portfolio. For other topics, please contact him directly.";
+        } else {
+          const intents = {
+            identity: { keys: ['\\bbot\\b', '\\bai\\b', 'who are you', 'what are you', 'your name', 'who r u', 'ur name'], res: "I am an AI assistant built to guide you through Sriharsha's portfolio." },
+            subject: { keys: ['who is this', 'whose portfolio', 'name is he', 'his name'], res: "Sriharsha Sripada, an AI & Data Science Engineer." },
+            projects: { keys: ['\\bproject', '\\bportfolio', '\\bbuilt\\b', '\\bbuild\\b', '\\bwork\\b', 'omnilens', 'yolo', 'github', 'naive bayes'], res: "He built OmniLens-Pro, Inverse-Correlation Naive Bayes, and a YOLOv8 Military Object Detection system. See 'System Deployments'." },
+            skills: { keys: ['\\bskill', '\\btech', '\\bstack', '\\blanguage', '\\btool', '\\bpython\\b', '\\bc\\+\\+', '\\breact', 'tensorflow', 'pytorch'], res: "Core stack: Python, C++, TensorFlow, PyTorch, React. Specializes in ML pipelines and Agentic AI." },
+            experience: { keys: ['\\bexperience', '\\bbackground', '\\bintern', '\\bjob\\b', '\\brole', '\\bcareer', '\\bresume', 'done any work'], res: "He is an AI & Data Science Engineer focusing on Agentic AI Systems, ML pipelines, and advanced CV models." },
+            education: { keys: ['\\beducation', '\\bstudy', '\\bcgpa\\b', '\\bgpa\\b', '\\bcollege', 'university', 'school', '\\bnit\\b', 'jee', '\\bdegree', 'btech', 'b.tech'], res: "B.Tech at NIT Warangal (9.26 CGPA). Secured AIR 3504 in JEE Mains." },
+            contact: { keys: ['contact', '\\bhire\\b', 'email', '\\breach', 'linkedin', 'connect', 'phone', 'call'], res: "Email him at sriharshasripada25@gmail.com." },
+            greetings: { keys: ['\\bhello\\b', '\\bhi\\b', '\\bhey\\b', 'greetings'], res: "Hello! Ask me about Sriharsha's projects, skills, or experience." }
+          };
+
+          let bestIntent = null;
+          let maxScore = 0;
+
+          for (const [intentName, data] of Object.entries(intents)) {
+            let score = 0;
+            data.keys.forEach(key => {
+              const regex = new RegExp(key, 'i');
+              if (regex.test(msg)) {
+                score += key.length > 5 ? 3 : 2;
+              }
+            });
+            if (score > maxScore) {
+              maxScore = score;
+              bestIntent = intentName;
+            }
+          }
+
+          if (maxScore > 0) {
+            aiResponse = intents[bestIntent].res;
+          } else {
+            aiResponse = "I'm not sure about that. Please contact Sriharsha directly at sriharshasripada25@gmail.com.";
+          }
+        }
       }
 
       setChatMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
@@ -315,7 +361,7 @@ export default function Portfolio() {
               ))}
             </motion.div>
           </motion.div>
-          <HeroNeuralBrain />
+          <HeroParticleBrain />
         </div>
       </section>
 
@@ -492,6 +538,7 @@ export default function Portfolio() {
                   </div>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input */}

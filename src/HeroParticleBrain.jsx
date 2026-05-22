@@ -8,10 +8,11 @@ export default function HeroParticleBrain() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0">
+    <div className="relative w-full h-[500px] rounded-[2rem] overflow-hidden border border-cyan-500/20 bg-black/40 backdrop-blur-xl shadow-[0_0_30px_rgba(6,182,212,0.1)] group">
       <Particles
         id="tsparticles-brain"
         init={particlesInit}
+        className="absolute inset-0 z-0"
         options={{
           fullScreen: { enable: false },
           background: {
@@ -98,7 +99,15 @@ export default function HeroParticleBrain() {
           detectRetina: true,
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/50 to-[#050505] pointer-events-none" />
+      {/* Ambient Glow */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 rounded-full blur-[80px] pointer-events-none group-hover:from-cyan-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
+
+      {/* Holographic Text */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center w-full pointer-events-none">
+        <div className="text-cyan-400 font-mono text-xs tracking-widest uppercase bg-black/50 inline-block px-4 py-1.5 rounded-full border border-cyan-500/30">
+          Particle Brain Active
+        </div>
+      </div>
     </div>
   );
 }

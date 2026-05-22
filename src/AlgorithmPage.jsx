@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaTimes, FaChartLine, FaBrain, FaCogs, FaDownload, FaFlask, FaExclamationTriangle, FaCheckCircle, FaLightbulb, FaEnvelope } from 'react-icons/fa';
+import { FaTimes, FaChartLine, FaBrain, FaCogs, FaDownload, FaFlask, FaExclamationTriangle, FaCheckCircle, FaLightbulb, FaEnvelope, FaRocket } from 'react-icons/fa';
 
 export default function AlgorithmPage({ onClose }) {
   useEffect(() => {

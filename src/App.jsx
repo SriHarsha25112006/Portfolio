@@ -5,14 +5,11 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
 import AlgorithmPage from './AlgorithmPage';
-import HeroParticleBrain from './HeroParticleBrain';
-import HeroMatrixMath from './HeroMatrixMath';
-import HeroBlackHole from './HeroBlackHole';
+import HeroQuantumCore from './HeroQuantumCore';
 
 export default function Portfolio() {
   const [init, setInit] = useState(false);
   const [showAlgorithm, setShowAlgorithm] = useState(false);
-  const [currentHero, setCurrentHero] = useState('brain'); // 'brain', 'matrix', 'blackhole'
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -209,32 +206,47 @@ export default function Portfolio() {
         }}
       />
 
-      {/* Dynamic Hero Background */}
-      {currentHero === 'brain' && <HeroParticleBrain />}
-      {currentHero === 'matrix' && <HeroMatrixMath />}
-      {currentHero === 'blackhole' && <HeroBlackHole />}
-      
-      {/* Hero Switcher UI (Temporary) */}
-      <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex gap-2 p-2 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-        <button 
-          onClick={() => setCurrentHero('brain')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-none ${currentHero === 'brain' ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.6)]' : 'text-gray-400 hover:text-cyan-400'}`}
-        >
-          Particle Brain
-        </button>
-        <button 
-          onClick={() => setCurrentHero('matrix')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-none ${currentHero === 'matrix' ? 'bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.6)]' : 'text-gray-400 hover:text-purple-400'}`}
-        >
-          ML Matrix Rain
-        </button>
-        <button 
-          onClick={() => setCurrentHero('blackhole')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-none ${currentHero === 'blackhole' ? 'bg-pink-500 text-white shadow-[0_0_15px_rgba(236,72,153,0.6)]' : 'text-gray-400 hover:text-pink-400'}`}
-        >
-          Data Singularity
-        </button>
-      </div>
+      {/* Interactive Background Particles */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        className="absolute inset-0 z-0 pointer-events-none"
+          options={{
+            background: { color: { value: "transparent" } },
+            fpsLimit: 60,
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: "grab" },
+              },
+              modes: {
+                grab: { distance: 140, links: { opacity: 0.5 } },
+              },
+            },
+            particles: {
+              color: { value: "#22d3ee" },
+              links: {
+                color: "#a855f7",
+                distance: 150,
+                enable: true,
+                opacity: 0.2,
+                width: 1,
+              },
+              move: {
+                direction: "none",
+                enable: true,
+                outModes: { default: "bounce" },
+                random: false,
+                speed: 0.8,
+                straight: false,
+              },
+              number: { density: { enable: true, area: 800 }, value: 40 },
+              opacity: { value: 0.3 },
+              shape: { type: "circle" },
+              size: { value: { min: 1, max: 2 } },
+            },
+            detectRetina: true,
+        }}
+      />
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)]">
@@ -303,7 +315,7 @@ export default function Portfolio() {
               ))}
             </motion.div>
           </motion.div>
-
+          <HeroQuantumCore />
         </div>
       </section>
 

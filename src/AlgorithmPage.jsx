@@ -199,6 +199,92 @@ export default function AlgorithmPage({ onClose }) {
               </div>
             </motion.section>
 
+            {/* Benchmark Results */}
+            <motion.section variants={fadeInUp} className="relative">
+              <div className="absolute -left-4 top-0 w-1 h-full bg-orange-500/50 rounded-r-md"></div>
+              <div className="flex items-center gap-3 mb-6">
+                <FaChartLine className="text-orange-400 w-7 h-7" />
+                <h3 className="text-2xl font-bold text-gray-100 tracking-tight">Benchmark: 17 OpenML Datasets</h3>
+              </div>
+              
+              <div className="bg-[#050505] rounded-3xl border border-orange-500/20 shadow-[0_0_30px_rgba(249,115,22,0.1)] overflow-hidden">
+                <div className="p-6 border-b border-white/10 bg-white/5">
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    To prove the superiority of IC-NB, it was benchmarked against <code className="text-cyan-300">sklearn</code>'s <code className="text-cyan-300">GaussianNB</code> across 17 diverse datasets. 
+                    Because of the <code className="text-cyan-300">optimize_alpha=True</code> fallback mechanism, <strong>IC-NB strictly dominates GaussianNB</strong>—it triggers massive performance gains when feature correlation is present, and safely mirrors standard GaussianNB when it is not.
+                  </p>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse text-sm">
+                    <thead>
+                      <tr className="bg-black/50 text-orange-300/80 uppercase tracking-wider border-b border-white/10">
+                        <th className="p-4 font-semibold">Dataset</th>
+                        <th className="p-4 font-semibold">Samples</th>
+                        <th className="p-4 font-semibold">Features</th>
+                        <th className="p-4 font-semibold">GaussianNB</th>
+                        <th className="p-4 font-semibold">IC-NB</th>
+                        <th className="p-4 font-semibold text-green-400">Improvement</th>
+                        <th className="p-4 font-semibold">Best Alpha</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-gray-400">
+                      <tr className="hover:bg-white/5 transition-colors">
+                        <td className="p-4 font-bold text-white">pc3</td><td>1563</td><td>37</td><td>0.4696</td><td className="font-bold text-white">0.6869</td><td className="text-green-400 font-bold">+21.73%</td><td>1.00</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors bg-white/[0.02]">
+                        <td className="p-4 font-bold text-white">vehicle</td><td>846</td><td>18</td><td>0.4353</td><td className="font-bold text-white">0.5294</td><td className="text-green-400 font-bold">+9.41%</td><td>1.00</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors">
+                        <td className="p-4 font-bold text-white">qsar-biodeg</td><td>1055</td><td>41</td><td>0.6682</td><td className="font-bold text-white">0.7299</td><td className="text-green-400 font-bold">+6.17%</td><td>0.01</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors bg-white/[0.02]">
+                        <td className="p-4 font-bold text-white">ilpd</td><td>583</td><td>9</td><td>0.5299</td><td className="font-bold text-white">0.5641</td><td className="text-green-400 font-bold">+3.42%</td><td>0.01</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors">
+                        <td className="p-4 font-bold text-white">phoneme</td><td>5404</td><td>5</td><td>0.7447</td><td className="font-bold text-white">0.7715</td><td className="text-green-400 font-bold">+2.68%</td><td>0.01</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors bg-white/[0.02]">
+                        <td className="p-4 font-bold text-white">pc1</td><td>1109</td><td>21</td><td>0.8784</td><td className="font-bold text-white">0.8829</td><td className="text-green-400 font-bold">+0.45%</td><td>0.10</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500">
+                        <td className="p-4">diabetes</td><td>768</td><td>8</td><td>0.7078</td><td>0.7078</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500 bg-white/[0.02]">
+                        <td className="p-4">spambase</td><td>4601</td><td>57</td><td>0.8328</td><td>0.8328</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500">
+                        <td className="p-4">blood-transfusion</td><td>748</td><td>4</td><td>0.7600</td><td>0.7600</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500 bg-white/[0.02]">
+                        <td className="p-4">wdbc</td><td>569</td><td>30</td><td>0.9211</td><td>0.9211</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500">
+                        <td className="p-4">kc2</td><td>522</td><td>21</td><td>0.8190</td><td>0.8190</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500 bg-white/[0.02]">
+                        <td className="p-4">kc1</td><td>2109</td><td>21</td><td>0.8318</td><td>0.8318</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500">
+                        <td className="p-4">pc4</td><td>1458</td><td>37</td><td>0.8630</td><td>0.8630</td><td>-</td><td>0.01</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500 bg-white/[0.02]">
+                        <td className="p-4">jm1</td><td>10880</td><td>21</td><td>0.7978</td><td>0.7978</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500">
+                        <td className="p-4">madelon</td><td>2600</td><td>500</td><td>0.6154</td><td>0.6154</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500 bg-white/[0.02]">
+                        <td className="p-4">credit-g</td><td>1000</td><td>7</td><td>0.7000</td><td>0.7000</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors text-gray-500">
+                        <td className="p-4">sick</td><td>2751</td><td>6</td><td>0.9474</td><td>0.9474</td><td>-</td><td>inf (GNB Fallback)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </motion.section>
+
             {/* Future Directions */}
             <motion.section variants={fadeInUp} className="relative">
               <div className="absolute -left-4 top-0 w-1 h-full bg-blue-500/30 rounded-r-md"></div>

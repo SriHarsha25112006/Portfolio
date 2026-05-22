@@ -97,7 +97,7 @@ export default function Portfolio() {
       let aiResponse = "That's an interesting question! You can email Harsha directly at sriharshasripada25@gmail.com for more details.";
       
       if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built')) {
-        aiResponse = "Harsha has built incredible systems like OmniLens-Pro (an AI shopping assistant), an automated Email-Helper-Bot, and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
+        aiResponse = "Harsha has built incredible systems like OmniLens-Pro, Inverse-Correlation Naive Bayes (a novel ML classifier), and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
       } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack')) {
         aiResponse = "His core stack includes Python, C++, TensorFlow, PyTorch, and React. He specializes in Machine Learning pipelines and Agentic AI Systems.";
       } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email')) {
@@ -111,6 +111,12 @@ export default function Portfolio() {
   };
 
   const projects = [
+    {
+      title: 'Inverse-Correlation Naive Bayes',
+      desc: 'A mathematically principled extension to scikit-learn\'s GaussianNB that solves the double-counting flaw using Precision Matrix weighting. Achieved up to 21% accuracy improvement on OpenML datasets.',
+      link: 'https://github.com/SriHarsha25112006/Naive-Bayes-Improvement',
+      tags: ['Python', 'Machine Learning', 'Mathematics', 'Scikit-Learn']
+    },
     {
       title: 'OmniLens-Pro',
       desc: 'An intelligent AI shopping assistant that converts vague user queries into structured product intent using semantic extraction and ranking pipelines.',

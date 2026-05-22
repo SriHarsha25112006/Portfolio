@@ -5,7 +5,7 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
 import AlgorithmPage from './AlgorithmPage';
-import HeroParticleBrain from './HeroParticleBrain';
+import HeroHologram from './HeroHologram';
 
 export default function Portfolio() {
   const [init, setInit] = useState(false);
@@ -77,13 +77,15 @@ export default function Portfolio() {
           'expernce': 'experience',
           'edcation': 'education',
           'projets': 'projects',
+          'projct': 'project',
           'cntact': 'contact',
+          'wht': 'what',
           'wat': 'what',
           'ur': 'your',
           'r': 'are',
           'u': 'you'
         };
-        msg = msg.split(/\\W+/).map(w => corrections[w] || w).join(' ');
+        msg = msg.split(/\W+/).map(w => corrections[w] || w).join(' ');
 
         const outOfScopePatterns = [
           'weather', 'joke', 'recipe', 'cook', 'bake', 'capital', 'movie', 'song', 
@@ -94,14 +96,14 @@ export default function Portfolio() {
           aiResponse = "I specialize only in Sriharsha's portfolio. For other topics, please contact him directly.";
         } else {
           const intents = {
-            identity: { keys: ['\\bbot\\b', '\\bai\\b', 'who are you', 'what are you', 'your name', 'who r u', 'ur name'], res: "I am an AI assistant built to guide you through Sriharsha's portfolio." },
+            identity: { keys: ['\\\\bbot\\\\b', '\\\\bai\\\\b', 'who are you', 'what are you', 'your name', 'who r u', 'ur name'], res: "I am an AI assistant built to guide you through Sriharsha's portfolio." },
             subject: { keys: ['who is this', 'whose portfolio', 'name is he', 'his name'], res: "Sriharsha Sripada, an AI & Data Science Engineer." },
-            projects: { keys: ['\\bproject', '\\bportfolio', '\\bbuilt\\b', '\\bbuild\\b', '\\bwork\\b', 'omnilens', 'yolo', 'github', 'naive bayes'], res: "He built OmniLens-Pro, Inverse-Correlation Naive Bayes, and a YOLOv8 Military Object Detection system. See 'System Deployments'." },
-            skills: { keys: ['\\bskill', '\\btech', '\\bstack', '\\blanguage', '\\btool', '\\bpython\\b', '\\bc\\+\\+', '\\breact', 'tensorflow', 'pytorch'], res: "Core stack: Python, C++, TensorFlow, PyTorch, React. Specializes in ML pipelines and Agentic AI." },
-            experience: { keys: ['\\bexperience', '\\bbackground', '\\bintern', '\\bjob\\b', '\\brole', '\\bcareer', '\\bresume', 'done any work'], res: "He is an AI & Data Science Engineer focusing on Agentic AI Systems, ML pipelines, and advanced CV models." },
-            education: { keys: ['\\beducation', '\\bstudy', '\\bcgpa\\b', '\\bgpa\\b', '\\bcollege', 'university', 'school', '\\bnit\\b', 'jee', '\\bdegree', 'btech', 'b.tech'], res: "B.Tech at NIT Warangal (9.26 CGPA). Secured AIR 3504 in JEE Mains." },
-            contact: { keys: ['contact', '\\bhire\\b', 'email', '\\breach', 'linkedin', 'connect', 'phone', 'call'], res: "Email him at sriharshasripada25@gmail.com." },
-            greetings: { keys: ['\\bhello\\b', '\\bhi\\b', '\\bhey\\b', 'greetings'], res: "Hello! Ask me about Sriharsha's projects, skills, or experience." }
+            projects: { keys: ['\\\\bproject', '\\\\bportfolio', '\\\\bbuilt\\\\b', '\\\\bbuild\\\\b', '\\\\bwork\\\\b', 'omnilens', 'yolo', 'github', 'naive bayes'], res: "He built OmniLens-Pro, Inverse-Correlation Naive Bayes, and a YOLOv8 Military Object Detection system. See 'System Deployments'." },
+            skills: { keys: ['\\\\bskill', '\\\\btech', '\\\\bstack', '\\\\blanguage', '\\\\btool', '\\\\bpython\\\\b', '\\\\bc\\\\+\\\\+', '\\\\breact', 'tensorflow', 'pytorch'], res: "Core stack: Python, C++, TensorFlow, PyTorch, React. Specializes in ML pipelines and Agentic AI." },
+            experience: { keys: ['\\\\bexperience', '\\\\bbackground', '\\\\bintern', '\\\\bjob\\\\b', '\\\\brole', '\\\\bcareer', '\\\\bresume', 'done any work'], res: "He is an AI & Data Science Engineer focusing on Agentic AI Systems, ML pipelines, and advanced CV models." },
+            education: { keys: ['\\\\beducation', '\\\\bstudy', '\\\\bcgpa\\\\b', '\\\\bgpa\\\\b', '\\\\bcollege', 'university', 'school', '\\\\bnit\\\\b', 'jee', '\\\\bdegree', 'btech', 'b.tech', 'mains', 'rank', 'advanced', 'air', 'achievements', 'accomplishments'], res: "B.Tech at NIT Warangal (9.26 CGPA). Secured AIR 3504 in JEE Mains and AIR 8072 in JEE Advanced." },
+            contact: { keys: ['contact', '\\\\bhire\\\\b', 'email', '\\\\breach', 'linkedin', 'connect', 'phone', 'call'], res: "Email him at sriharshasripada25@gmail.com." },
+            greetings: { keys: ['\\\\bhello\\\\b', '\\\\bhi\\\\b', '\\\\bhey\\\\b', 'greetings'], res: "Hello! Ask me about Sriharsha's projects, skills, or experience." }
           };
 
           let bestIntent = null;
@@ -348,10 +350,11 @@ export default function Portfolio() {
               </a>
             </motion.div>
 
-            <motion.div variants={staggerContainer} className="grid grid-cols-2 gap-4 pt-12 max-w-sm">
+            <motion.div variants={staggerContainer} className="grid grid-cols-2 lg:grid-cols-3 gap-4 pt-12 max-w-lg">
               {[
                 { label: 'Current CGPA', value: '9.26', color: 'cyan' },
                 { label: 'JEE Mains', value: 'AIR 3504', color: 'pink' },
+                { label: 'JEE Advanced', value: 'AIR 8072', color: 'purple' },
               ].map((stat, i) => (
                 <motion.div key={i} variants={fadeInUp} className="relative group rounded-2xl bg-black/50 border border-white/10 p-5 backdrop-blur-sm overflow-hidden">
                   <div className={`absolute inset-0 bg-gradient-to-br from-${stat.color}-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
@@ -361,7 +364,7 @@ export default function Portfolio() {
               ))}
             </motion.div>
           </motion.div>
-          <HeroParticleBrain />
+          <HeroHologram />
         </div>
       </section>
 

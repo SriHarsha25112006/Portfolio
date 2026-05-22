@@ -227,6 +227,24 @@ export default function AlgorithmPage({ onClose }) {
 
             {/* Collaborate & Download */}
             <motion.section variants={fadeInUp} className="border-t border-white/10 pt-10">
+              <div className="mb-10 bg-black/40 p-6 rounded-3xl border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.02)]">
+                <h3 className="text-xl font-bold text-gray-200 mb-4 border-b border-white/10 pb-2">API Parameters</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                    <div className="text-cyan-400 font-mono text-sm mb-1">optimize_alpha <span className="text-gray-500">(bool)</span></div>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      Defaults to <code className="text-orange-400">True</code>. Automatically performs internal cross-validation to find the optimal L2 ridge penalty. This guarantees the model never performs worse than standard GaussianNB by falling back to it if dependency weighting doesn't help.
+                    </p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                    <div className="text-purple-400 font-mono text-sm mb-1">metric <span className="text-gray-500">(str)</span></div>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      Accepts <code className="text-green-300">'pearson'</code> or <code className="text-green-300">'spearman'</code>. Use pearson for standard linear correlations, and spearman for monotonic or rank-based dependencies.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid md:grid-cols-2 gap-8 items-start">
                 
                 {/* Download */}

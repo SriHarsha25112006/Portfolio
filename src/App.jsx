@@ -40,42 +40,8 @@ export default function Portfolio() {
     await loadFull(engine);
   }, []);
 
-  // Terminal State
-  const [terminalInput, setTerminalInput] = useState('');
-  const [terminalOutput, setTerminalOutput] = useState([
-    { type: 'sys', text: 'import brain' },
-    { type: 'sys', text: 'from future import ai_agent' },
-    { type: 'sys', text: 'initialize_engineer()' },
-    { type: 'out', text: 'Skills: ["TensorFlow", "PyTorch", "CV"]' },
-    { type: 'out', text: 'Focus: "Agentic AI Systems"' },
-    { type: 'sys', text: 'System Ready. Type "help" for commands.' }
-  ]);
-  
-  const handleTerminalSubmit = (e) => {
-    if (e.key === 'Enter' && terminalInput.trim()) {
-      const cmd = terminalInput.trim().toLowerCase();
-      const newOutput = [...terminalOutput, { type: 'in', text: `> ${cmd}` }];
-      
-      if (cmd === 'help') {
-        newOutput.push({ type: 'out', text: 'Available commands: skills, contact, clear, whoami' });
-      } else if (cmd === 'skills') {
-        newOutput.push({ type: 'out', text: 'Loading neural weights... [C++, Python, TensorFlow, PyTorch, YOLOv8]' });
-      } else if (cmd === 'contact') {
-        newOutput.push({ type: 'out', text: 'Establishing connection: sriharshasripada25@gmail.com' });
-      } else if (cmd === 'clear') {
-        setTerminalOutput([]);
-        setTerminalInput('');
-        return;
-      } else if (cmd === 'whoami') {
-        newOutput.push({ type: 'out', text: 'Guest User (Clearance Level: Visitor)' });
-      } else {
-        newOutput.push({ type: 'err', text: `Command not found: ${cmd}` });
-      }
-      
-      setTerminalOutput(newOutput);
-      setTerminalInput('');
-    }
-  };
+  // AI Core State
+  const [aiCoreStatus, setAiCoreStatus] = useState('Initializing Neural Network...');
 
   // Chatbot State
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -98,14 +64,18 @@ export default function Portfolio() {
       const lowerMsg = userMsg.toLowerCase();
       let aiResponse = "That's an interesting question! You can email Harsha directly at sriharshasripada25@gmail.com for more details.";
       
-      if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built')) {
+      if (lowerMsg.includes('project') || lowerMsg.includes('portfolio') || lowerMsg.includes('built') || lowerMsg.includes('work')) {
         aiResponse = "Harsha has built incredible systems like OmniLens-Pro, Inverse-Correlation Naive Bayes (a novel ML classifier), and a YOLOv8 Military Object Detection system. You can check them out in the 'System Deployments' section!";
-      } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack')) {
+      } else if (lowerMsg.includes('skill') || lowerMsg.includes('tech') || lowerMsg.includes('stack') || lowerMsg.includes('language') || lowerMsg.includes('know')) {
         aiResponse = "His core stack includes Python, C++, TensorFlow, PyTorch, and React. He specializes in Machine Learning pipelines and Agentic AI Systems.";
-      } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email')) {
+      } else if (lowerMsg.includes('contact') || lowerMsg.includes('hire') || lowerMsg.includes('email') || lowerMsg.includes('reach')) {
         aiResponse = "You can reach out to him directly at sriharshasripada25@gmail.com or connect with him on LinkedIn!";
-      } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa')) {
-        aiResponse = "He is currently a B.Tech student at NIT Warangal with a 9.26 CGPA. He also secured AIR 3504 in JEE Mains!";
+      } else if (lowerMsg.includes('education') || lowerMsg.includes('study') || lowerMsg.includes('cgpa') || lowerMsg.includes('college') || lowerMsg.includes('university') || lowerMsg.includes('school')) {
+        aiResponse = "He is currently a B.Tech student at NIT Warangal with a stellar 9.26 CGPA. He also secured AIR 3504 in JEE Mains!";
+      } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
+        aiResponse = "Hello there! I'm Sriharsha's AI assistant. Ask me about his projects, skills, or education!";
+      } else if (lowerMsg.includes('who are you') || lowerMsg.includes('what are you')) {
+        aiResponse = "I am a simulated AI assistant built specifically for this portfolio, designed to help you learn more about Sriharsha's capabilities!";
       }
 
       setChatMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
@@ -341,50 +311,72 @@ export default function Portfolio() {
             </motion.div>
           </motion.div>
 
-          {/* Interactive Terminal Hero */}
+          {/* Interactive AI Core Hero */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="relative hidden lg:block z-20"
+            className="relative hidden lg:flex justify-center items-center z-20 h-[500px]"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-[2rem] blur-3xl animate-pulse pointer-events-none"></div>
-            <div className="relative h-[450px] w-full rounded-[2rem] border border-cyan-500/30 bg-black/80 backdrop-blur-xl shadow-[0_0_50px_rgba(6,182,212,0.15)] flex flex-col font-mono text-sm overflow-hidden">
-              
-              {/* Terminal Header */}
-              <div className="bg-white/5 border-b border-white/10 px-4 py-3 flex items-center gap-4">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                </div>
-                <p className="text-gray-400 text-xs flex items-center gap-2"><FaTerminal /> root@sriharsha-ai: ~</p>
-              </div>
+            {/* Ambient Glow */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
+            
+            {/* Central Core Element */}
+            <div className="relative w-80 h-80 flex items-center justify-center cursor-none">
+              {/* Outer rings */}
+              <motion.div 
+                className="absolute inset-0 rounded-full border border-cyan-500/30 border-dashed"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div 
+                className="absolute inset-4 rounded-full border border-purple-500/40"
+                style={{ borderTopWidth: 4, borderRightWidth: 1 }}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div 
+                className="absolute inset-8 rounded-full border-2 border-cyan-400/20"
+                style={{ borderBottomWidth: 4 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              />
 
-              {/* Terminal Body */}
-              <div className="flex-1 p-6 overflow-y-auto space-y-2 text-gray-300">
-                {terminalOutput.map((line, i) => (
-                  <div key={i} className={`flex gap-3 ${line.type === 'err' ? 'text-red-400' : line.type === 'sys' ? 'text-purple-400' : 'text-cyan-300'}`}>
-                    <span className="opacity-50 select-none">~</span>
-                    <span className="whitespace-pre-wrap">{line.text}</span>
-                  </div>
-                ))}
-                
-                {/* Active Input Line */}
-                <div className="flex gap-3 items-center text-green-400 mt-4">
-                  <span className="opacity-50 select-none">~</span>
-                  <span className="text-white">&gt;</span>
-                  <input 
-                    type="text" 
-                    value={terminalInput}
-                    onChange={(e) => setTerminalInput(e.target.value)}
-                    onKeyDown={handleTerminalSubmit}
-                    className="flex-1 bg-transparent border-none outline-none text-white caret-cyan-400 cursor-none"
-                    placeholder="Type a command... (e.g. 'help')"
-                    spellCheck="false"
-                    autoComplete="off"
-                  />
-                </div>
+              {/* Core Sphere */}
+              <motion.div 
+                className="relative w-40 h-40 rounded-full bg-gradient-to-br from-cyan-400 to-purple-600 shadow-[0_0_50px_rgba(6,182,212,0.8)] flex items-center justify-center overflow-hidden"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 80px rgba(168,85,247,0.8)" }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                {/* Inner core waves */}
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjAyIiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjMiIG1peC1ibGVuZC1tb2RlPSJvdmVybGF5Ii8+PC9zdmc+')] opacity-50 mix-blend-overlay"></div>
+                <FaBrain className="w-16 h-16 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] animate-pulse relative z-10" />
+              </motion.div>
+
+              {/* Orbital Nodes */}
+              {[...Array(6)].map((_, i) => (
+                <motion.div 
+                  key={i}
+                  className="absolute w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.8)]"
+                  style={{
+                    top: '50%',
+                    left: '50%',
+                    marginTop: -6,
+                    marginLeft: -6,
+                  }}
+                  animate={{
+                    x: Math.cos((i * 60) * (Math.PI / 180)) * 140,
+                    y: Math.sin((i * 60) * (Math.PI / 180)) * 140,
+                  }}
+                  transition={{ type: "spring", duration: 2 }}
+                />
+              ))}
+            </div>
+            
+            {/* Holographic Text */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center w-full">
+              <div className="text-cyan-400 font-mono text-sm tracking-widest uppercase bg-black/50 inline-block px-4 py-1 rounded-full border border-cyan-500/30">
+                Neural Core Active
               </div>
             </div>
           </motion.div>
@@ -420,7 +412,15 @@ export default function Portfolio() {
             <motion.div key={index} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="h-full">
               <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} scale={1.02} transitionSpeed={2500} className="h-full rounded-[2rem]">
                 <a 
-                  href={project.link} target="_blank" rel="noreferrer"
+                  href={project.hasAlgorithmPage ? "#" : project.link} 
+                  target={project.hasAlgorithmPage ? "_self" : "_blank"} 
+                  rel="noreferrer"
+                  onClick={(e) => { 
+                    if (project.hasAlgorithmPage) {
+                      e.preventDefault();
+                      setShowAlgorithm(true);
+                    }
+                  }}
                   className="cursor-none group relative h-full flex flex-col rounded-[2rem] border border-white/10 bg-black/60 backdrop-blur-xl p-8 hover:border-cyan-500/50 hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)] transition-colors duration-300"
                 >
                   <div className="absolute top-8 right-8 text-white/20 group-hover:text-cyan-400 transition-colors">

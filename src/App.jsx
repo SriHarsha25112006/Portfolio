@@ -5,7 +5,7 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tilt from 'react-parallax-tilt';
 import AlgorithmPage from './AlgorithmPage';
-import HeroQuantumCore from './HeroQuantumCore';
+import HeroNeuralBrain from './HeroNeuralBrain';
 
 export default function Portfolio() {
   const [init, setInit] = useState(false);
@@ -315,7 +315,7 @@ export default function Portfolio() {
               ))}
             </motion.div>
           </motion.div>
-          <HeroQuantumCore />
+          <HeroNeuralBrain />
         </div>
       </section>
 

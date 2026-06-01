@@ -243,19 +243,19 @@ export default function Portfolio() {
       <AnimatePresence>
         {clicks.map(click => (
           <div key={click.id} className="fixed top-0 left-0 pointer-events-none z-[999998]" style={{ transform: `translate3d(${click.x}px, ${click.y}px, 0)` }}>
-            {[...Array(8)].map((_, i) => (
+            {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-1.5 h-1.5 bg-yellow-400 rounded-full shadow-[0_0_8px_#facc15]"
+                className="absolute w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_#ffffff]"
                 style={{ originX: 0.5, originY: 0.5, left: -3, top: -3 }}
-                initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                initial={{ x: 0, y: 0, scale: 1.5, opacity: 1 }}
                 animate={{ 
-                  x: Math.cos(i * (Math.PI / 4)) * 50,
-                  y: Math.sin(i * (Math.PI / 4)) * 50,
+                  x: Math.cos(i * (Math.PI / 6)) * 65,
+                  y: Math.sin(i * (Math.PI / 6)) * 65,
                   scale: 0,
                   opacity: 0
                 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
               />
             ))}
           </div>
@@ -272,12 +272,12 @@ export default function Portfolio() {
         }}
       >
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ filter: "drop-shadow(0 0 6px rgba(34, 211, 238, 0.9))" }}>
-          {/* Main Blue Base */}
-          <path d="M 2 2 L 14 36 L 19 22 L 34 16 Z" fill="rgba(2, 132, 199, 0.9)" stroke="#22d3ee" strokeWidth="2.5" strokeLinejoin="bevel" />
+          {/* Main Blue Base - Sharper and Thinner */}
+          <path d="M 2 2 L 10 32 L 14 20 L 30 12 Z" fill="rgba(2, 132, 199, 0.9)" stroke="#22d3ee" strokeWidth="1.5" strokeLinejoin="miter" strokeMiterlimit="4" />
           {/* Inner Yellow Chevron */}
-          <path d="M 9 12 L 14 24 L 17 18 L 24 15 Z" fill="#facc15" />
+          <path d="M 7 10 L 10 22 L 12 17 L 20 12 Z" fill="#facc15" />
           {/* Cyan Energy Core */}
-          <path d="M 21 24 L 28 27 L 27 21 Z" fill="#22d3ee" />
+          <path d="M 16 20 L 22 22 L 21 17 Z" fill="#22d3ee" />
         </svg>
       </div>
 

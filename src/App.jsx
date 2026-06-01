@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useScroll, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCode, FaMicrochip, FaBrain, FaRocket, FaTrophy, FaBriefcase, FaTerminal, FaRobot, FaTimes, FaPaperPlane, FaBook } from 'react-icons/fa';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
@@ -14,18 +14,20 @@ export default function Portfolio() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   // Custom Cursor State
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const cursorRef = useRef(null);
+  const dotRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      if (cursorRef.current && dotRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX - 24}px, ${e.clientY - 24}px, 0)`;
+        dotRef.current.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, []);
 
   useEffect(() => {
     const handleMouseOver = (e) => {
@@ -139,6 +141,18 @@ export default function Portfolio() {
 
   const projects = [
     {
+      title: 'TalentStage',
+      desc: 'Premium AI-powered dual-sided marketplace connecting freelancers with clients. Features intelligent project scoping, AI skill verification, and smart matching using Google Gemini 1.5 Pro and LangChain.',
+      link: 'https://github.com/SriHarsha25112006/TalentStage',
+      tags: ['React', 'FastAPI', 'PostgreSQL', 'Agentic AI']
+    },
+    {
+      title: 'DriveLegal',
+      desc: 'Agentic AI web application providing instant, highly localized global traffic laws and fines using a LangGraph state machine, real-time web scraping, and Gemini Flash.',
+      link: 'https://github.com/SriHarsha25112006/DriveLegal',
+      tags: ['Python', 'LangGraph', 'Streamlit', 'Agentic AI']
+    },
+    {
       title: 'Inverse-Correlation Naive Bayes',
       desc: 'A mathematically principled extension to scikit-learn\'s GaussianNB that solves the double-counting flaw using Precision Matrix weighting. Achieved up to 21% accuracy improvement on OpenML datasets.',
       link: 'https://github.com/SriHarsha25112006/Naive-Bayes-Improvement',
@@ -215,17 +229,10 @@ export default function Portfolio() {
       />
 
       {/* AI Object Detection Cursor */}
-      <motion.div 
-        className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen flex items-center justify-center"
-        style={{ x: mouseX, y: mouseY, translateX: "-24px", translateY: "-24px" }}
-        animate={{ 
-          scale: isHovering ? 1.2 : 1,
-          rotate: isHovering ? 45 : 0
-        }}
-        transition={{ 
-          scale: { type: "spring", stiffness: 300, damping: 20 },
-          rotate: { type: "spring", stiffness: 300, damping: 20 }
-        }}
+      <div 
+        ref={cursorRef}
+        className={`fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen flex items-center justify-center transition-transform duration-200 ease-out ${isHovering ? 'scale-125 rotate-45' : 'scale-100 rotate-0'}`}
+        style={{ willChange: 'transform' }}
       >
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Bounding Box Corners */}
@@ -242,12 +249,11 @@ export default function Portfolio() {
              </g>
           )}
         </svg>
-      </motion.div>
-      <motion.div 
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[999999] shadow-[0_0_8px_#22d3ee]"
-        style={{ x: mouseX, y: mouseY, translateX: "-3px", translateY: "-3px" }}
-        animate={{ opacity: isHovering ? 0 : 1 }}
-        transition={{ opacity: { duration: 0.2 } }}
+      </div>
+      <div 
+        ref={dotRef}
+        className={`fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[999999] shadow-[0_0_8px_#22d3ee] transition-opacity duration-200 ${isHovering ? 'opacity-0' : 'opacity-100'}`}
+        style={{ willChange: 'transform' }}
       />
 
       {/* Interactive Background Particles */}

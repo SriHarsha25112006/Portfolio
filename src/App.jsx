@@ -26,10 +26,19 @@ export default function Portfolio() {
     };
     const handleMouseDown = (e) => {
       const id = Date.now();
-      setClicks(prev => [...prev, { id, x: e.clientX, y: e.clientY }]);
+      const rainbowColors = ['#ef4444', '#f59e0b', '#10b981', '#06b6d4', '#3b82f6', '#d946ef'];
+      const particles = Array.from({ length: 12 }).map((_, i) => ({
+        id: `${id}-${i}`,
+        color: rainbowColors[i % rainbowColors.length],
+        xOffset: (Math.random() - 0.5) * 120, // drift left/right
+        yOffset: Math.random() * 100 + 50,    // drift down
+        duration: 1.5 + Math.random() * 1.5,
+        rotation: (Math.random() - 0.5) * 360
+      }));
+      setClicks(prev => [...prev, { id, x: e.clientX, y: e.clientY, particles }]);
       setTimeout(() => {
         setClicks(prev => prev.filter(c => c.id !== id));
-      }, 600);
+      }, 3000);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -243,42 +252,61 @@ export default function Portfolio() {
       <AnimatePresence>
         {clicks.map(click => (
           <div key={click.id} className="fixed top-0 left-0 pointer-events-none z-[999998]" style={{ transform: `translate3d(${click.x}px, ${click.y}px, 0)` }}>
-            {[...Array(12)].map((_, i) => (
+            {click.particles.map(p => (
               <motion.div
-                key={i}
-                className="absolute w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_#ffffff]"
-                style={{ originX: 0.5, originY: 0.5, left: -3, top: -3 }}
-                initial={{ x: 0, y: 0, scale: 1.5, opacity: 1 }}
-                animate={{ 
-                  x: Math.cos(i * (Math.PI / 6)) * 65,
-                  y: Math.sin(i * (Math.PI / 6)) * 65,
-                  scale: 0,
-                  opacity: 0
+                key={p.id}
+                className="absolute w-2 h-2 rounded-sm"
+                style={{ 
+                  backgroundColor: p.color,
+                  boxShadow: `0 0 8px ${p.color}`,
+                  originX: 0.5, originY: 0.5, left: -4, top: -4 
                 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                initial={{ x: 0, y: 0, scale: 1, opacity: 1, rotate: 0 }}
+                animate={{ 
+                  x: p.xOffset,
+                  y: p.yOffset,
+                  scale: 0,
+                  opacity: 0,
+                  rotate: p.rotation
+                }}
+                transition={{ duration: p.duration, ease: "easeOut" }}
               />
             ))}
           </div>
         ))}
       </AnimatePresence>
 
-      {/* Sci-Fi Arrow Cursor */}
+      {/* Rainbow Outlined Cursor */}
       <div 
         ref={cursorRef}
-        className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen"
-        style={{ willChange: 'transform' }}
+        className="fixed top-0 left-0 pointer-events-none z-[999999]"
       >
         <div
-          className="transition-transform duration-200 ease-out"
+          className="transition-transform duration-200 ease-out will-change-transform"
           style={{ transform: isHovering ? 'scale(1.15)' : 'scale(1)' }}
         >
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ filter: "drop-shadow(0 0 6px rgba(34, 211, 238, 0.9))" }}>
-            {/* Main Blue Base - Sharper and Thinner */}
-            <path d="M 2 2 L 10 32 L 14 20 L 30 12 Z" fill="rgba(2, 132, 199, 0.9)" stroke="#22d3ee" strokeWidth="1.5" strokeLinejoin="miter" strokeMiterlimit="4" />
-            {/* Inner Yellow Chevron */}
-            <path d="M 7 10 L 10 22 L 12 17 L 20 12 Z" fill="#facc15" />
-            {/* Cyan Energy Core */}
-            <path d="M 16 20 L 22 22 L 21 17 Z" fill="#22d3ee" />
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <defs>
+              <linearGradient id="rainbowGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ef4444" />
+                <stop offset="20%" stopColor="#f59e0b" />
+                <stop offset="40%" stopColor="#10b981" />
+                <stop offset="60%" stopColor="#06b6d4" />
+                <stop offset="80%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#d946ef" />
+              </linearGradient>
+              <filter id="cursorGlow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            {/* Main Dark Base */}
+            <path d="M 4 4 L 14 34 L 30 18 Z" fill="#171717" stroke="url(#rainbowGlow)" strokeWidth="2.5" filter="url(#cursorGlow)" strokeLinejoin="round" />
+            {/* Inner Y Accent */}
+            <path d="M 16 20 L 4 4 M 16 20 L 14 34 M 16 20 L 30 18" stroke="url(#rainbowGlow)" strokeWidth="2.5" filter="url(#cursorGlow)" strokeLinecap="round" />
           </svg>
         </div>
       </div>

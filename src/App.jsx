@@ -15,18 +15,29 @@ export default function Portfolio() {
 
   // Custom Cursor State
   const cursorRef = useRef(null);
-  const dotRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [clicks, setClicks] = useState([]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      if (cursorRef.current && dotRef.current) {
-        cursorRef.current.style.transform = `translate3d(${e.clientX - 24}px, ${e.clientY - 24}px, 0)`;
-        dotRef.current.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX - 2}px, ${e.clientY - 2}px, 0)`;
       }
     };
+    const handleMouseDown = (e) => {
+      const id = Date.now();
+      setClicks(prev => [...prev, { id, x: e.clientX, y: e.clientY }]);
+      setTimeout(() => {
+        setClicks(prev => prev.filter(c => c.id !== id));
+      }, 600);
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousedown", handleMouseDown);
+    };
   }, []);
 
   useEffect(() => {
@@ -228,33 +239,47 @@ export default function Portfolio() {
         style={{ scaleX }}
       />
 
-      {/* AI Object Detection Cursor */}
+      {/* Click Sparkles */}
+      <AnimatePresence>
+        {clicks.map(click => (
+          <div key={click.id} className="fixed top-0 left-0 pointer-events-none z-[999998]" style={{ transform: `translate3d(${click.x}px, ${click.y}px, 0)` }}>
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1.5 h-1.5 bg-yellow-400 rounded-full shadow-[0_0_8px_#facc15]"
+                style={{ originX: 0.5, originY: 0.5, left: -3, top: -3 }}
+                initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                animate={{ 
+                  x: Math.cos(i * (Math.PI / 4)) * 50,
+                  y: Math.sin(i * (Math.PI / 4)) * 50,
+                  scale: 0,
+                  opacity: 0
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+            ))}
+          </div>
+        ))}
+      </AnimatePresence>
+
+      {/* Sci-Fi Arrow Cursor */}
       <div 
         ref={cursorRef}
-        className={`fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen flex items-center justify-center transition-transform duration-200 ease-out ${isHovering ? 'scale-125 rotate-45' : 'scale-100 rotate-0'}`}
-        style={{ willChange: 'transform' }}
+        className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen transition-transform duration-200 ease-out"
+        style={{ 
+          willChange: 'transform',
+          transform: isHovering ? 'scale(1.15)' : 'scale(1)'
+        }}
       >
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Bounding Box Corners */}
-          <path d="M 6 16 L 6 6 L 16 6" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
-          <path d="M 32 6 L 42 6 L 42 16" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
-          <path d="M 6 32 L 6 42 L 16 42" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
-          <path d="M 42 32 L 42 42 L 32 42" stroke={isHovering ? "#a855f7" : "#22d3ee"} strokeWidth="2" strokeLinecap="square"/>
-          
-          {/* Target acquired elements */}
-          {isHovering && (
-             <g>
-               <circle cx="24" cy="24" r="2" fill="#a855f7" className="animate-pulse" />
-               <circle cx="24" cy="24" r="10" stroke="#a855f7" strokeWidth="1" strokeDasharray="2 4" className="animate-[spin_4s_linear_infinite]" />
-             </g>
-          )}
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ filter: "drop-shadow(0 0 6px rgba(34, 211, 238, 0.9))" }}>
+          {/* Main Blue Base */}
+          <path d="M 2 2 L 14 36 L 19 22 L 34 16 Z" fill="rgba(2, 132, 199, 0.9)" stroke="#22d3ee" strokeWidth="2.5" strokeLinejoin="bevel" />
+          {/* Inner Yellow Chevron */}
+          <path d="M 9 12 L 14 24 L 17 18 L 24 15 Z" fill="#facc15" />
+          {/* Cyan Energy Core */}
+          <path d="M 21 24 L 28 27 L 27 21 Z" fill="#22d3ee" />
         </svg>
       </div>
-      <div 
-        ref={dotRef}
-        className={`fixed top-0 left-0 w-1.5 h-1.5 bg-cyan-400 pointer-events-none z-[999999] shadow-[0_0_8px_#22d3ee] transition-opacity duration-200 ${isHovering ? 'opacity-0' : 'opacity-100'}`}
-        style={{ willChange: 'transform' }}
-      />
 
       {/* Interactive Background Particles */}
       <Particles

@@ -265,20 +265,22 @@ export default function Portfolio() {
       {/* Sci-Fi Arrow Cursor */}
       <div 
         ref={cursorRef}
-        className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen transition-transform duration-200 ease-out"
-        style={{ 
-          willChange: 'transform',
-          transform: isHovering ? 'scale(1.15)' : 'scale(1)'
-        }}
+        className="fixed top-0 left-0 pointer-events-none z-[999999] mix-blend-screen"
+        style={{ willChange: 'transform' }}
       >
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ filter: "drop-shadow(0 0 6px rgba(34, 211, 238, 0.9))" }}>
-          {/* Main Blue Base - Sharper and Thinner */}
-          <path d="M 2 2 L 10 32 L 14 20 L 30 12 Z" fill="rgba(2, 132, 199, 0.9)" stroke="#22d3ee" strokeWidth="1.5" strokeLinejoin="miter" strokeMiterlimit="4" />
-          {/* Inner Yellow Chevron */}
-          <path d="M 7 10 L 10 22 L 12 17 L 20 12 Z" fill="#facc15" />
-          {/* Cyan Energy Core */}
-          <path d="M 16 20 L 22 22 L 21 17 Z" fill="#22d3ee" />
-        </svg>
+        <div
+          className="transition-transform duration-200 ease-out"
+          style={{ transform: isHovering ? 'scale(1.15)' : 'scale(1)' }}
+        >
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ filter: "drop-shadow(0 0 6px rgba(34, 211, 238, 0.9))" }}>
+            {/* Main Blue Base - Sharper and Thinner */}
+            <path d="M 2 2 L 10 32 L 14 20 L 30 12 Z" fill="rgba(2, 132, 199, 0.9)" stroke="#22d3ee" strokeWidth="1.5" strokeLinejoin="miter" strokeMiterlimit="4" />
+            {/* Inner Yellow Chevron */}
+            <path d="M 7 10 L 10 22 L 12 17 L 20 12 Z" fill="#facc15" />
+            {/* Cyan Energy Core */}
+            <path d="M 16 20 L 22 22 L 21 17 Z" fill="#22d3ee" />
+          </svg>
+        </div>
       </div>
 
       {/* Interactive Background Particles */}

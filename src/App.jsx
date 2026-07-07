@@ -224,10 +224,12 @@ export default function Portfolio() {
   ];
 
   const skills = {
-    Languages: ['C++', 'Python', 'R', 'SQL', 'HTML/CSS'],
-    AI_ML: ['TensorFlow', 'PyTorch', 'Scikit-Learn', 'Pandas', 'NumPy', 'SciPy'],
-    Core: ['DSA', 'Operating Systems', 'DBMS', 'OOP', 'Statistical Analysis'],
-    Tools: ['Git', 'VS Code', 'Google Colab', 'Jupyter', 'Streamlit']
+    'Languages & Core': ['C++', 'Python', 'TypeScript', 'SQL', 'Math & Stats', 'DSA', 'OOP'],
+    'Deep Learning & CV': ['TensorFlow', 'PyTorch', 'Transformers', 'CNNs/RNNs', 'YOLOv8', 'OpenCV'],
+    'GenAI & NLP': ['LangChain', 'LlamaIndex', 'RAG', 'Semantic Search', 'LLMs'],
+    'Backend & Cloud': ['FastAPI', 'Node.js', 'Docker', 'AWS', 'REST/GraphQL'],
+    'Databases & Vector DBs': ['PostgreSQL', 'MongoDB', 'Pinecone', 'ChromaDB', 'FAISS'],
+    'Frontend & UI': ['React.js', 'Next.js', 'Tailwind CSS', 'Framer Motion', 'Streamlit']
   };
 
   const achievements = [
@@ -545,7 +547,7 @@ export default function Portfolio() {
           <h2 className="text-4xl font-bold tracking-tight">Tech Stack</h2>
         </motion.div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.entries(skills).map(([category, items], index) => (
             <motion.div 
               key={index} 

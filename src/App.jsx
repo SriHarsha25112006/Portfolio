@@ -225,11 +225,11 @@ export default function Portfolio() {
 
   const skills = {
     'Languages & Core': ['C++', 'Python', 'TypeScript', 'SQL', 'Math & Stats', 'DSA', 'OOP'],
-    'Deep Learning & CV': ['TensorFlow', 'PyTorch', 'Transformers', 'CNNs/RNNs', 'YOLOv8', 'OpenCV'],
-    'GenAI & NLP': ['LangChain', 'LlamaIndex', 'RAG', 'Semantic Search', 'LLMs'],
-    'Backend & Cloud': ['FastAPI', 'Node.js', 'Docker', 'AWS', 'REST/GraphQL'],
-    'Databases & Vector DBs': ['PostgreSQL', 'MongoDB', 'Pinecone', 'ChromaDB', 'FAISS'],
-    'Frontend & UI': ['React.js', 'Next.js', 'Tailwind CSS', 'Framer Motion', 'Streamlit']
+    'Deep Learning & CV': ['TensorFlow', 'PyTorch', 'Transformers', 'CNNs/RNNs', 'OpenCV'],
+    'GenAI & NLP': ['LangChain', 'RAG', 'Semantic Search', 'LLMs'],
+    'Backend & Cloud': ['FastAPI', 'Node.js', 'Docker', 'AWS'],
+    'Databases & Vector DBs': ['PostgreSQL', 'ChromaDB'],
+    'Frontend & UI': ['React.js', 'Tailwind CSS', 'Streamlit']
   };
 
   const achievements = [

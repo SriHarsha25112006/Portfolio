@@ -161,6 +161,18 @@ export default function Portfolio() {
 
   const projects = [
     {
+      title: 'Solar Flare Prediction (ISRO)',
+      desc: 'Real-time solar flare prediction for the ISRO hackathon utilizing Aditya-L1 satellite data streams via SOLEXS and HEL1OS payloads.',
+      link: 'https://github.com/SriHarsha25112006/Solar-Flare-Prediction',
+      tags: ['Data Science', 'Machine Learning', 'Space Tech']
+    },
+    {
+      title: 'RAG Knowledge Pipeline',
+      desc: 'A robust Retrieval-Augmented Generation (RAG) system built to contextually answer queries based on custom document datasets.',
+      link: 'https://github.com/SriHarsha25112006/RAG-Project',
+      tags: ['Python', 'LLMs', 'RAG']
+    },
+    {
       title: 'TalentStage',
       desc: 'Premium AI-powered dual-sided marketplace connecting freelancers with clients. Features intelligent project scoping, AI skill verification, and smart matching using Google Gemini 1.5 Pro and LangChain.',
       link: 'https://github.com/SriHarsha25112006/TalentStage',
@@ -219,6 +231,8 @@ export default function Portfolio() {
   };
 
   const achievements = [
+    'Selected for the highly competitive Amazon ML Summer School',
+    'Placed 765 out of 2816 in the Kaggle Stellar Prediction Competition',
     'National Semi-Finalist – Serve-Smart Hackathon (IIT BHU)',
     'JEE Advanced 2024 AIR 8072 (Top 0.5%)',
     'JEE Mains 2024 AIR 3504',

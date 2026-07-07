@@ -446,13 +446,40 @@ export default function Portfolio() {
           className="relative rounded-[2rem] border border-cyan-500/20 bg-black/60 backdrop-blur-xl p-10 md:p-16 overflow-hidden group hover:border-cyan-500/50 transition-colors duration-500"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center gap-4 mb-8 relative z-10">
             <FaBriefcase className="text-cyan-400 w-8 h-8" />
             <h2 className="text-4xl font-bold tracking-tight">About Me</h2>
           </div>
-          <p className="text-gray-300 leading-relaxed text-xl max-w-4xl font-light">
-            I thrive at the intersection of data and intelligence. My expertise lies in crafting robust <span className="text-cyan-300 font-medium">machine learning pipelines</span>, developing advanced <span className="text-purple-300 font-medium">computer vision</span> models, and engineering <span className="text-blue-300 font-medium">agentic AI systems</span>. I am driven by the challenge of translating complex academic research into scalable, high-performance applications that solve real-world problems.
-          </p>
+          
+          <div className="space-y-6 text-gray-300 leading-relaxed text-lg max-w-5xl font-light relative z-10">
+            <p>
+              I am an AI & Data Science Engineer thriving at the intersection of rigorous mathematical theory and highly scalable software architecture. My core expertise lies in architecting end-to-end intelligent systems, seamlessly transitioning complex theoretical models into production-ready deployments.
+            </p>
+            <p>
+              My deep learning foundation encompasses <span className="text-cyan-300 font-medium">Transformers, CNNs, and LSTMs</span>, which I leverage alongside advanced <span className="text-purple-300 font-medium">Computer Vision</span> techniques (YOLOv8, DSSA, Image Segmentation) to build state-of-the-art perception systems. I also specialize in <span className="text-blue-300 font-medium">Generative AI & LLMs</span>, orchestrating powerful <span className="text-pink-300 font-medium">RAG pipelines</span>, semantic search, and contextual reasoning engines using LangChain and LlamaIndex.
+            </p>
+            <p>
+              Beyond modeling, I possess a strong command of <span className="text-yellow-300 font-medium">Mathematics & Statistics</span> (Bayesian Inference, Probability, Linear Algebra) which mathematically grounds my algorithmic design. I back this up with robust <span className="text-green-300 font-medium">Full-Stack Engineering</span>, utilizing FastAPI, Node.js, and React to construct highly responsive UIs powered by high-throughput backends and scalable Vector Databases (Pinecone, ChromaDB, FAISS).
+            </p>
+            
+            {/* Tech Stack Pills */}
+            <div className="pt-8">
+              <h3 className="text-xl font-semibold text-white mb-4">Core Technology Stack</h3>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  'Deep Learning (Transformers/CNN/RNN)', 'Generative AI & RAG', 'LangChain & LlamaIndex',
+                  'Computer Vision (YOLOv8/OpenCV)', 'NLP & Semantic Search', 
+                  'FastAPI & Node.js', 'React.js & Tailwind CSS', 
+                  'Vector DBs (Pinecone/Chroma/FAISS)', 'Bayesian Statistics & Linear Algebra',
+                  'PostgreSQL & MongoDB'
+                ].map((tech, i) => (
+                  <span key={i} className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-cyan-50 hover:border-cyan-400 hover:bg-cyan-900/20 transition-colors cursor-none drop-shadow-md">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
       </section>
 
